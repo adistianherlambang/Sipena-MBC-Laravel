@@ -1,3 +1,8 @@
+@php
+    /** @var \App\Models\Complaint|null $complaint */
+    /** @var \Illuminate\Support\Collection|\App\Models\ComplaintResponse[] $responses */
+    /** @var \Illuminate\Support\Collection|\App\Models\StatusLog[] $logs */
+@endphp
 @extends('layouts.app')
 
 @section('content')

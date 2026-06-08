@@ -1,3 +1,6 @@
+@php
+    /** @var \Illuminate\Support\Collection|\App\Models\Complaint[] $latest */
+@endphp
 @extends('layouts.app', [
     'layout' => $isSuperArea ? 'superadmin' : 'admin',
     'activeMenu' => 'dashboard'

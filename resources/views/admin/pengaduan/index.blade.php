@@ -1,3 +1,6 @@
+@php
+    /** @var \Illuminate\Pagination\LengthAwarePaginator|\App\Models\Complaint[] $rows */
+@endphp
 @extends('layouts.app', [
     'layout' => $isSuperArea ? 'superadmin' : 'admin',
     'activeMenu' => 'pengaduan'

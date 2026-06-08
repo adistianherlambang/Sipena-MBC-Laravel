@@ -1,3 +1,6 @@
+@php
+    /** @var \App\Models\Complaint|null $complaint */
+@endphp
 @extends('layouts.app')
 
 @section('content')

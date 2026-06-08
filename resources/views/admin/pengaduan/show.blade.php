@@ -1,3 +1,8 @@
+@php
+    /** @var \App\Models\Complaint $complaint */
+    /** @var \Illuminate\Support\Collection|\App\Models\ComplaintResponse[] $responses */
+    /** @var \Illuminate\Support\Collection|\App\Models\StatusLog[] $logs */
+@endphp
 @extends('layouts.app', [
     'layout' => $isSuperArea ? 'superadmin' : 'admin',
     'activeMenu' => 'pengaduan'
