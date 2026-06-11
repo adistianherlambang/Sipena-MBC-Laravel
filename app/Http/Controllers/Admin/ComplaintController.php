@@ -15,10 +15,10 @@ class ComplaintController extends Controller
 {
     public function index(Request $request)
     {
-        $q = trim((string) $request->get('q'));
-        $status = trim((string) $request->get('status'));
-        $kategori = trim((string) $request->get('kategori'));
-        $limit = (int) $request->get('limit', 10);
+        $q = trim((string) $request->input('q'));
+        $status = trim((string) $request->input('status'));
+        $kategori = trim((string) $request->input('kategori'));
+        $limit = (int) $request->input('limit', 10);
         if (! in_array($limit, [10, 50, 100])) {
             $limit = 10;
         }
@@ -50,7 +50,7 @@ class ComplaintController extends Controller
         return view('admin.pengaduan.index', compact('rows', 'q', 'status', 'kategori', 'limit', 'isSuperArea', 'areaPath'));
     }
 
-    public function show($id, Request $request)
+    public function show(int $id, Request $request)
     {
         $complaint = Complaint::with(['assignedAdmin', 'escalatedTo'])->findOrFail($id);
 
@@ -70,7 +70,7 @@ class ComplaintController extends Controller
         return view('admin.pengaduan.show', compact('complaint', 'responses', 'logs', 'isSuperArea', 'areaPath'));
     }
 
-    public function updateStatus($id, Request $request)
+    public function updateStatus(int $id, Request $request)
     {
         $request->validate([
             'status' => 'required|in:diajukan,diproses,diteruskan,menunggu_keputusan,ditanggapi,selesai,ditolak',
@@ -104,7 +104,7 @@ class ComplaintController extends Controller
         return back()->with('success', 'Status berhasil diperbarui.');
     }
 
-    public function addResponse($id, Request $request)
+    public function addResponse(int $id, Request $request)
     {
         $request->validate([
             'message' => 'required|string',
@@ -154,7 +154,7 @@ class ComplaintController extends Controller
         return back()->with('success', $successMsg);
     }
 
-    public function escalate($id, Request $request)
+    public function escalate(int $id, Request $request)
     {
         $user = Auth::user();
         if ($user->role !== 'admin') {
@@ -207,6 +207,6 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($request->id);
         $complaint->delete();
 
-        return redirect()->route('superadmin.complaint.index')->with('success', 'Pengaduan berhasil dihapus.');
+        return to_route('superadmin.complaint.index')->with('success', 'Pengaduan berhasil dihapus.');
     }
 }

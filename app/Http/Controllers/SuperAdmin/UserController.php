@@ -48,17 +48,17 @@ class UserController extends Controller
             'is_active' => $request->has('is_active') ? true : false,
         ]);
 
-        return redirect()->route('superadmin.user.index')->with('success', 'User berhasil ditambahkan.');
+        return to_route('superadmin.user.index')->with('success', 'User berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $editUser = User::findOrFail($id);
 
         return view('superadmin.user.edit', compact('editUser'));
     }
 
-    public function update($id, Request $request)
+    public function update(int $id, Request $request)
     {
         $editUser = User::findOrFail($id);
 
@@ -88,7 +88,7 @@ class UserController extends Controller
 
         $editUser->update($updateData);
 
-        return redirect()->route('superadmin.user.index')->with('success', 'User berhasil diperbarui.');
+        return to_route('superadmin.user.index')->with('success', 'User berhasil diperbarui.');
     }
 
     public function destroy(Request $request)
@@ -105,6 +105,6 @@ class UserController extends Controller
         $user = User::findOrFail($request->id);
         $user->update(['is_active' => false]);
 
-        return redirect()->route('superadmin.user.index')->with('success', 'User berhasil dinonaktifkan.');
+        return to_route('superadmin.user.index')->with('success', 'User berhasil dinonaktifkan.');
     }
 }

@@ -98,7 +98,7 @@ class LandingPageController extends Controller
                 'note' => 'Pengaduan dibuat oleh pelanggan.',
             ]);
 
-            return redirect()->route('complaint.tiket', [
+            return to_route('complaint.tiket', [
                 'ticket' => $ticketNo,
                 'token' => $publicToken,
             ])->with('success', 'Pengaduan berhasil dikirim. Simpan nomor tiket Anda.');
@@ -110,8 +110,8 @@ class LandingPageController extends Controller
 
     public function tracking(Request $request)
     {
-        $ticket = trim((string) $request->get('ticket_no'));
-        $nomorWa = trim((string) $request->get('nomor_wa'));
+        $ticket = trim((string) $request->input('ticket_no'));
+        $nomorWa = trim((string) $request->input('nomor_wa'));
         $nomorWaClean = preg_replace('/\D+/', '', $nomorWa) ?: '';
 
         $complaint = null;
@@ -143,8 +143,8 @@ class LandingPageController extends Controller
 
     public function tiket(Request $request)
     {
-        $ticket = trim((string) $request->get('ticket'));
-        $token = trim((string) $request->get('token'));
+        $ticket = trim((string) $request->input('ticket'));
+        $token = trim((string) $request->input('token'));
 
         $complaint = Complaint::where('ticket_no', $ticket)
             ->where('public_token', $token)

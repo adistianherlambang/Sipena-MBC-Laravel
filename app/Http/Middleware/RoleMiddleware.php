@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, ...$roles): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         if (! $request->user()) {
-            return redirect()->route('admin.login');
+            return to_route('admin.login');
         }
 
         if (! in_array($request->user()->role, $roles)) {

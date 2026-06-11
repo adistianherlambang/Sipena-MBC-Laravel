@@ -12,7 +12,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
 
-            return redirect()->route($user->role === 'super_admin' ? 'superadmin.dashboard' : 'admin.dashboard');
+            return to_route($user->role === 'super_admin' ? 'superadmin.dashboard' : 'admin.dashboard');
         }
 
         return view('admin.login');
@@ -30,12 +30,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            /** @var \App\Models\User $user */
             $user = Auth::user();
             $user->update([
                 'last_login' => now(),
             ]);
 
-            return redirect()->route($user->role === 'super_admin' ? 'superadmin.dashboard' : 'admin.dashboard');
+            return to_route($user->role === 'super_admin' ? 'superadmin.dashboard' : 'admin.dashboard');
         }
 
         return back()->withErrors([
@@ -50,6 +51,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('admin.login')->with('success', 'Berhasil logout.');
+        return to_route('admin.login')->with('success', 'Berhasil logout.');
     }
 }
