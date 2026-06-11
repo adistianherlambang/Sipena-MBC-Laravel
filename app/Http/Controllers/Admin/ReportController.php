@@ -92,22 +92,22 @@ class ReportController extends Controller
 
     private function getFilters(Request $request): array
     {
-        $status = $request->get('status', '');
+        $status = $request->input('status', '');
         if ($status !== '' && ! in_array($status, ['diajukan', 'diproses', 'diteruskan', 'menunggu_keputusan', 'ditanggapi', 'selesai', 'ditolak'])) {
             $status = '';
         }
 
-        $bulan = $request->get('bulan', '');
+        $bulan = $request->input('bulan', '');
         if ($bulan !== '' && (! ctype_digit((string) $bulan) || (int) $bulan < 1 || (int) $bulan > 12)) {
             $bulan = '';
         }
 
-        $tahun = $request->get('tahun', '');
+        $tahun = $request->input('tahun', '');
         if ($tahun !== '' && (! ctype_digit((string) $tahun) || (int) $tahun < 2020 || (int) $tahun > 2100)) {
             $tahun = '';
         }
 
-        $limit = (int) $request->get('limit', 10);
+        $limit = (int) $request->input('limit', 10);
         if (! in_array($limit, [10, 50, 100, 500])) {
             $limit = 10;
         }

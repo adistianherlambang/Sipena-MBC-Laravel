@@ -71,13 +71,13 @@
                     <option value="masalah_lain" {{ old('kategori') === 'masalah_lain' ? 'selected' : '' }}>Masalah Lain</option>
                 </select>
             </div>
-            <div class="form-group" id="kategori-lain-wrap" style="{{ old('kategori') === 'masalah_lain' ? '' : 'display:none;' }}">
+            <div class="form-group" id="kategori-lain-wrap" @style(['display: none' => old('kategori') !== 'masalah_lain'])>
                 <label for="kategori_lain">Isi Jenis Masalah Lain *</label>
                 <input id="kategori_lain" name="kategori_lain" type="text" value="{{ old('kategori_lain') }}" maxlength="150">
             </div>
         </div>
         <div class="grid grid-2">
-            <div class="form-group" id="struk-wrap" style="{{ old('kategori') === 'return_produk' ? '' : 'display:none;' }}">
+            <div class="form-group" id="struk-wrap" @style(['display: none' => old('kategori') !== 'return_produk'])>
                 <label for="struk_file">Upload Struk Belanja *</label>
                 <input id="struk_file" name="struk_file" type="file" accept=".jpg,.jpeg,.png,.pdf">
                 <div class="help">Format: JPG, PNG, PDF. Maksimal 2 MB.</div>
