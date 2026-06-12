@@ -210,12 +210,6 @@ flowchart TD
     SL[status_logs]
     LS[landing_settings]
 
-    style U fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
-    style C fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
-    style CR fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
-    style SL fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
-    style LS fill:#dae8fc,stroke:#6c8ebf,stroke-width:2px
-
     %% RELATIONSHIPS (Belah Ketupat)
     R1{menangani}
     R2{menerima}
@@ -223,13 +217,6 @@ flowchart TD
     R4{mengubah}
     R5{memiliki}
     R6{memiliki}
-
-    style R1 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    style R2 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    style R3 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    style R4 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    style R5 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    style R6 fill:#d5e8d4,stroke:#82b366,stroke-width:2px
 
     %% ATTRIBUTES (Bulat Lonjong)
     
@@ -241,14 +228,6 @@ flowchart TD
     u_role(["role"])
     u_is_active(["is_active"])
     u_last_login(["last_login"])
-
-    style u_id fill:#f8cecc,stroke:#b85450,stroke-width:1px
-    style u_nama fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style u_username fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style u_password fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style u_role fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style u_is_active fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style u_last_login fill:#fff2cc,stroke:#d6b656,stroke-width:1px
 
     U --- u_id
     U --- u_nama
@@ -272,19 +251,6 @@ flowchart TD
     c_status(["status"])
     c_closed(["closed_at"])
 
-    style c_id fill:#f8cecc,stroke:#b85450,stroke-width:1px
-    style c_ticket fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_token fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_pelanggan fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_wa fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_kat fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_kat_lain fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_ket fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_struk fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_dok fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_status fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style c_closed fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-
     C --- c_id
     C --- c_ticket
     C --- c_token
@@ -305,12 +271,6 @@ flowchart TD
     cr_msg(["message"])
     cr_att(["attachment_file"])
 
-    style cr_id fill:#f8cecc,stroke:#b85450,stroke-width:1px
-    style cr_sender fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style cr_vis fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style cr_msg fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style cr_att fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-
     CR --- cr_id
     CR --- cr_sender
     CR --- cr_vis
@@ -323,11 +283,6 @@ flowchart TD
     sl_new(["new_status"])
     sl_note(["note"])
 
-    style sl_id fill:#f8cecc,stroke:#b85450,stroke-width:1px
-    style sl_old fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style sl_new fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style sl_note fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-
     SL --- sl_id
     SL --- sl_old
     SL --- sl_new
@@ -337,10 +292,6 @@ flowchart TD
     ls_id(["<u>id</u>"])
     ls_key(["setting_key"])
     ls_val(["setting_value"])
-
-    style ls_id fill:#f8cecc,stroke:#b85450,stroke-width:1px
-    style ls_key fill:#fff2cc,stroke:#d6b656,stroke-width:1px
-    style ls_val fill:#fff2cc,stroke:#d6b656,stroke-width:1px
 
     LS --- ls_id
     LS --- ls_key
@@ -371,6 +322,15 @@ flowchart TD
     %% Complaints - memiliki - Logs (1 to N)
     C ---|1| R6
     R6 -->|N| SL
+
+    %% STYLING (Monokromatik: Lingkaran/Bentuk Putih, Font & Line Hitam)
+    classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
+    classDef entity fill:#fff,stroke:#000,stroke-width:2px,color:#000;
+    classDef relationship fill:#fff,stroke:#000,stroke-width:2px,color:#000;
+
+    class U,C,CR,SL,LS entity;
+    class R1,R2,R3,R4,R5,R6 relationship;
+    linkStyle default stroke:#000,stroke-width:1.5px,color:#000;
 ```
 
 ### Panduan Impor Langsung ke Draw.io
