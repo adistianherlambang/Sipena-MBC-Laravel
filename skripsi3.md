@@ -318,66 +318,80 @@ Tabel database atau basis data adalah kumpulan file yang berkaitan dengan progra
 ##### (1) Tabel `users`
 Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfungsi untuk memproses otentikasi login serta identifikasi hak akses level pengguna, baik Admin maupun Super Admin.
 
-| Nama Kolom | Tipe Data | Atribut | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID unik pengguna |
-| `nama` | string(255) | Not Null | Nama lengkap admin/super admin |
-| `username` | string(255) | Unique, Not Null | Nama pengguna untuk akses masuk |
-| `password` | string(255) | Not Null | Kata sandi terenkripsi |
-| `role` | enum('admin','super_admin') | Not Null, Default: 'admin' | Otoritas hak akses |
-| `is_active` | boolean | Default: true | Status keaktifan akun pengguna |
-| `last_login` | datetime | Nullable | Waktu login terakhir |
+| Field | Type | Null | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
+| `nama` | varchar(255) | NO | | NULL | |
+| `username` | varchar(255) | NO | UNI | NULL | |
+| `password` | varchar(255) | NO | | NULL | |
+| `role` | enum('admin','super_admin') | NO | | 'admin' | |
+| `is_active` | tinyint(1) | NO | | 1 | |
+| `last_login` | datetime | YES | | NULL | |
+| `created_at` | timestamp | YES | | NULL | |
+| `updated_at` | timestamp | YES | | NULL | |
 
 ##### (2) Tabel `complaints`
 Tabel `complaints` diperlukan untuk merekam seluruh rincian keluhan masuk yang diajukan oleh konsumen.
 
-| Nama Kolom | Tipe Data | Atribut | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID keluhan |
-| `ticket_no` | string(30) | Unique, Not Null | Nomor tiket keluhan otomatis |
-| `public_token` | string(100) | Unique, Not Null | Token pelacakan halaman publik |
-| `nama_pelanggan`| string(100) | Not Null | Nama lengkap konsumen |
-| `nomor_wa` | string(30) | Not Null | Nomor WhatsApp konsumen |
-| `kategori` | enum(...) | Not Null | Kategori keluhan |
-| `keterangan` | text | Nullable | Detail keluhan konsumen |
-| `struk_file` | string(255) | Nullable | Unggah struk belanja |
-| `dokumen_file` | string(255) | Nullable | Dokumen bukti pendukung |
-| `status` | enum(...) | Not Null, Default: 'diajukan' | Status progres keluhan |
-| `assigned_admin_id`| bigint | FK (users), Nullable | ID admin yang menangani keluhan |
-| `escalated_to_id`| bigint | FK (users), Nullable | ID Kepala Shift untuk eskalasi |
+| Field | Type | Null | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
+| `ticket_no` | varchar(30) | NO | UNI | NULL | |
+| `public_token` | varchar(100) | NO | UNI | NULL | |
+| `nama_pelanggan` | varchar(100) | NO | | NULL | |
+| `nomor_wa` | varchar(30) | NO | | NULL | |
+| `nomor_wa_clean` | varchar(30) | NO | | NULL | |
+| `kategori` | enum('pelayanan','return_produk','produk','masalah_lain') | NO | | NULL | |
+| `kategori_lain` | varchar(150) | YES | | NULL | |
+| `keterangan` | text | YES | | NULL | |
+| `struk_file` | varchar(255) | YES | | NULL | |
+| `dokumen_file` | varchar(255) | YES | | NULL | |
+| `status` | enum('diajukan','diproses','diteruskan','menunggu_keputusan','ditanggapi','selesai','ditolak') | NO | | 'diajukan' | |
+| `assigned_admin_id` | bigint unsigned | YES | MUL | NULL | |
+| `escalated_to_id` | bigint unsigned | YES | MUL | NULL | |
+| `created_at` | timestamp | YES | | NULL | |
+| `updated_at` | timestamp | YES | | NULL | |
+| `closed_at` | datetime | YES | | NULL | |
 
 ##### (3) Tabel `complaint_responses`
 Tabel `complaint_responses` diperlukan untuk mendata percakapan dan respon balasan dari staff admin maupun sistem.
 
-| Nama Kolom | Tipe Data | Atribut | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key | ID unik respon |
-| `complaint_id` | bigint | FK (complaints), Not Null | Keterkaitan dengan ID keluhan |
-| `user_id` | bigint | FK (users), Nullable | ID admin pembuat respon |
-| `visibility` | enum('internal','public') | Not Null | Status visibilitas balasan |
-| `message` | text | Not Null | Isi teks balasan |
-| `attachment_file`| string(255) | Nullable | File lampiran balasan |
+| Field | Type | Null | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
+| `complaint_id` | bigint unsigned | NO | MUL | NULL | |
+| `user_id` | bigint unsigned | YES | MUL | NULL | |
+| `sender_role` | enum('admin','super_admin','system') | NO | | 'admin' | |
+| `visibility` | enum('internal','public') | NO | | 'internal' | |
+| `message` | text | NO | | NULL | |
+| `attachment_file` | varchar(255) | YES | | NULL | |
+| `created_at` | timestamp | YES | | NULL | |
+| `updated_at` | timestamp | YES | | NULL | |
 
 ##### (4) Tabel `status_logs`
 Tabel `status_logs` diperlukan untuk mencatat riwayat perubahan status pelaporan keluhan secara berurutan.
 
-| Nama Kolom | Tipe Data | Atribut | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key | ID log status |
-| `complaint_id` | bigint | FK (complaints), Not Null | ID pengaduan |
-| `old_status` | string(50) | Nullable | Status lama |
-| `new_status` | string(50) | Not Null | Status baru |
-| `changed_by` | bigint | FK (users), Nullable | ID staff pengubah status |
-| `note` | text | Nullable | Catatan/alasan perubahan status |
+| Field | Type | Null | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
+| `complaint_id` | bigint unsigned | NO | MUL | NULL | |
+| `old_status` | varchar(50) | YES | | NULL | |
+| `new_status` | varchar(50) | NO | | NULL | |
+| `changed_by` | bigint unsigned | YES | MUL | NULL | |
+| `note` | text | YES | | NULL | |
+| `created_at` | timestamp | YES | | NULL | |
+| `updated_at` | timestamp | YES | | NULL | |
 
 ##### (5) Tabel `landing_settings`
 Tabel `landing_settings` diperlukan untuk menampung pengaturan data antarmuka halaman beranda secara dinamis.
 
-| Nama Kolom | Tipe Data | Atribut | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key | ID pengaturan |
-| `setting_key` | string(100) | Unique, Not Null | Kode kunci konfigurasi |
-| `setting_value`| text | Nullable | Nilai isi konfigurasi |
+| Field | Type | Null | Key | Default | Extra |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
+| `setting_key` | varchar(100) | NO | UNI | NULL | |
+| `setting_value` | text | YES | | NULL | |
+| `created_at` | timestamp | YES | | NULL | |
+| `updated_at` | timestamp | YES | | NULL | |
 
 ---
 
