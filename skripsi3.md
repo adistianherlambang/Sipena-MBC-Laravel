@@ -8,7 +8,7 @@ Berikut adalah perancangan sistem yang diusulkan oleh penulis sebagai acuan sebe
 Pada tahap ini, penulis menerjemahkan sistem yang dapat menentukan proses dan data yang diperlukan pada sistem pengaduan yang sudah dirancang sebelum pembuatan koding.
 
 ### 1) Use Case Diagram
-Use Case Diagram menggambarkan fungsionalitas sistem dari sudut pandang interaksi antara pengguna (aktor) dengan sistem pengaduan pelanggan (Sipena) pada MBC Swalayan. Diagram use case tersebut adalah sebagai berikut:
+Use Case Diagram menggambarkan fungsionalitas sistem dari sudut pandang interaksi antara pengguna atau aktor dengan sistem pengaduan pelanggan yang dinamakan Sipena pada MBC Swalayan. Diagram use case tersebut adalah sebagai berikut:
 
 ```mermaid
 graph TD
@@ -59,10 +59,10 @@ graph TD
 ---
 
 ### 2) Activity Diagram
-Activity diagram menunjukkan aliran kerja (workflow) dari use case diagram untuk masing-masing role pengguna.
+Activity diagram menunjukkan aliran kerja dari use case diagram untuk masing-masing role pengguna.
 
 #### (1) Activity Diagram Admin
-Pada Gambar 2.2 berikut, merupakan activity diagram admin dalam mengelola data pada sistem informasi pengaduan pelanggan MBC Swalayan mulai dari proses autentikasi login hingga melakukan aksi pengelolaan.
+Pada Gambar 2.2 berikut merupakan activity diagram admin dalam mengelola data pada sistem informasi pengaduan pelanggan MBC Swalayan mulai dari proses autentikasi login hingga melakukan aksi pengelolaan.
 
 ```mermaid
 flowchart TD
@@ -140,14 +140,14 @@ flowchart TD
 Proses desain akan menerjemahkan sebuah perancangan perangkat lunak yang di mana sebelumnya diperkirakan untuk diimplementasikan ke koding. Berikut adalah langkah untuk melakukan desain sistem: desain database dan desain interface.
 
 ### a. Desain Database
-Desain database terbagi menjadi 2 yaitu ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan pada MBC Swalayan dan tabel.
+Desain database terbagi menjadi dua bagian, yaitu Entity Relationship Diagram sistem informasi pengaduan pelanggan pada MBC Swalayan serta tabel.
 
-#### 1) ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan pada MBC Swalayan
-Berdasarkan Gambar 3.1, ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan Pada MBC Swalayan terbagi menjadi 5 tabel (`users`, `complaints`, `complaint_responses`, `status_logs`, dan `landing_settings`) di mana pada setiap entitas memiliki beberapa atribut.
+#### 1. Entity Relationship Diagram sistem informasi pengaduan pelanggan pada MBC Swalayan
+Berdasarkan Gambar 3.1, Entity Relationship Diagram sistem informasi pengaduan pelanggan pada MBC Swalayan terbagi menjadi lima tabel, yaitu tabel users, complaints, complaint_responses, status_logs, serta landing_settings, di mana setiap entitas memiliki beberapa atribut.
 
 ```mermaid
 flowchart TD
-    %% ENTITIES (Persegi Panjang)
+    %% ENTITIES
     U[users]
     C[complaints]
     CR[complaint_responses]
@@ -271,7 +271,7 @@ flowchart TD
 Tabel database atau basis data adalah kumpulan file yang berkaitan dengan program, yang di mana untuk menyimpan data sistem informasi pengaduan pelanggan pada MBC Swalayan dibutuhkan database. Berikut ini adalah tabel – tabel yang berada dalam database:
 
 ##### (1) Tabel `users`
-Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfungsi untuk memproses otentikasi login serta identifikasi hak akses level pengguna (Admin / Super Admin).
+Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfungsi untuk memproses otentikasi login serta identifikasi hak akses level pengguna, baik Admin maupun Super Admin.
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
@@ -403,7 +403,7 @@ erDiagram
 ### b. Desain Interface
 
 #### 1) Rancangan Form Login Admin
-Tampilan form login digunakan untuk memberikan hak akses kepada administrator (Admin/Super Admin) untuk masuk ke halaman dashboard internal sistem. Form ini adalah sebagai berikut:
+Tampilan form login digunakan untuk memberikan hak akses kepada administrator, yaitu Admin atau Super Admin, untuk masuk ke halaman dashboard internal sistem. Form tersebut dirancang sebagai berikut:
 
 ##### Halaman Form Login Admin
 ```
@@ -424,7 +424,7 @@ Tampilan form login digunakan untuk memberikan hak akses kepada administrator (A
 ##### Tabel 3.1. Rancangan Tombol Form Login Admin
 | No | Tombol | Fungsi |
 | :--- | :--- | :--- |
-| 1 | `MASUK` | Berfungsi untuk mengirimkan kredensial (username & password) ke sistem untuk divalidasi. Jika sukses, admin dialihkan ke halaman dashboard. |
+| 1 | `MASUK` | Berfungsi untuk mengirimkan kredensial berupa username dan password ke sistem untuk divalidasi. Jika sukses, admin dialihkan ke halaman dashboard. |
 
 ---
 
