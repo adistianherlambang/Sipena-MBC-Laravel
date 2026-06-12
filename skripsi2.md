@@ -330,7 +330,7 @@ flowchart TD
 
     class U,C,CR,SL,LS entity;
     class R1,R2,R3,R4,R5,R6 relationship;
-    linkStyle default stroke:#000,stroke-width:1.5px,color:#000;
+    linkStyle default stroke:#000,stroke-width:1.5px;
 ```
 
 ### Panduan Impor Langsung ke Draw.io

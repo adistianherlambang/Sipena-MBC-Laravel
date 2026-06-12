@@ -136,6 +136,51 @@ flowchart TD
 
 ---
 
+#### (3) Activity Diagram Super Admin
+Pada Gambar 2.4 berikut merupakan activity diagram Super Admin dalam melakukan pengelolaan data karyawan, konfigurasi landing page, serta menangani keluhan tingkat lanjut yang membutuhkan eskalasi di dalam sistem pengaduan pelanggan.
+
+```mermaid
+flowchart TD
+    StartSuper([Mulai]) --> FormLoginSuper[Mengakses Halaman Login]
+    FormLoginSuper --> InputAuthSuper[Masukkan Kredensial Akun]
+    InputAuthSuper --> CekAuthSuper{Apakah Valid?}
+    CekAuthSuper -->|Tidak| FormLoginSuper
+    CekAuthSuper -->|Ya| DashboardSuper[Masuk ke Dashboard Super Admin]
+
+    DashboardSuper --> PilihMenuSuper{Pilih Menu}
+
+    %% Kelola User
+    PilihMenuSuper -->|Kelola User| ListUser[Lihat Daftar Karyawan]
+    ListUser --> AksiUser{Pilih Aksi}
+    AksiUser -->|Tambah Baru| FormUser[Isi Data Karyawan & Tentukan Role]
+    AksiUser -->|Ubah Status| StatusUser[Edit Informasi / Aktifkan / Nonaktifkan Akun]
+    FormUser --> SimpanUser[Simpan Data ke Database]
+    StatusUser --> SimpanUser
+    SimpanUser --> DashboardSuper
+
+    %% Kelola Pengaturan
+    PilihMenuSuper -->|Landing Page Settings| FormSetting[Ubah Konten Running Text, Tautan YouTube, Hero Section]
+    FormSetting --> SimpanSetting[Update Setting Keys di Database]
+    SimpanSetting --> DashboardSuper
+
+    %% Proses Eskalasi & Hapus
+    PilihMenuSuper -->|Penanganan Tiket| BukaTiket[Buka Tiket Berstatus Menunggu Keputusan]
+    BukaTiket --> AksiTiket{Tentukan Keputusan}
+    AksiTiket -->|Selesaikan / Tolak| UpdateTiket[Update Status Akhir & Beri Catatan]
+    AksiTiket -->|Hapus Tiket| HapusTiket[Hapus Tiket Permanen dari Sistem]
+    UpdateTiket --> SimpanTiket[Sistem Update Database]
+    HapusTiket --> SimpanTiket
+    SimpanTiket --> DashboardSuper
+
+    PilihMenuSuper -->|Logout| LogoutSuper[Keluar dari Sistem]
+    LogoutSuper --> EndSuper([Selesai])
+
+    classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
+```
+*Gambar 2.4. Activity Diagram Super Admin Sistem Informasi Pengaduan Pelanggan (Sipena).*
+
+---
+
 ## 3. Desain Prosedur Sistem Yang Diusulkan
 Proses desain akan menerjemahkan sebuah perancangan perangkat lunak yang di mana sebelumnya diperkirakan untuk diimplementasikan ke koding. Berikut adalah langkah untuk melakukan desain sistem: desain database dan desain interface.
 
@@ -261,7 +306,7 @@ flowchart TD
 
     class U,C,CR,SL,LS entity;
     class R1,R2,R3,R4,R5,R6 relationship;
-    linkStyle default stroke:#000,stroke-width:1.5px,color:#000;
+    linkStyle default stroke:#000,stroke-width:1.5px;
 ```
 *Gambar 3.1. Entity Relationship Diagram (ERD) Sipena MBC Swalayan.*
 
