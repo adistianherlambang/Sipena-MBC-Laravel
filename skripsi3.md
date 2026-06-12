@@ -1,6 +1,6 @@
-# Dokumentasi Perancangan Sistem Pengaduan Pelanggan (Sipena) - Edisi Skripsi
+# Dokumentasi Perancangan Sistem Pengaduan Pelanggan (Sipena) MBC Swalayan
 
-Bab ini membahas perancangan sistem informasi pengaduan pelanggan berbasis web (Sipena) pada MBC Swalayan yang meliputi Use Case Diagram, Activity Diagram, Desain Prosedur Sistem, Desain Database (ERD, Tabel, Relasi), serta Desain Interface.
+Berikut adalah perancangan sistem yang diusulkan oleh penulis sebagai acuan sebelum proses pembuatan kode program dilakukan.
 
 ---
 
@@ -8,18 +8,16 @@ Bab ini membahas perancangan sistem informasi pengaduan pelanggan berbasis web (
 Pada tahap ini, penulis menerjemahkan sistem yang dapat menentukan proses dan data yang diperlukan pada sistem pengaduan yang sudah dirancang sebelum pembuatan koding.
 
 ### 1) Use Case Diagram
-Use Case Diagram menggambarkan interaksi antara aktor (pengguna sistem) dengan fungsionalitas yang disediakan oleh sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan adalah sebagai berikut:
+Use Case Diagram menggambarkan fungsionalitas sistem dari sudut pandang interaksi antara pengguna (aktor) dengan sistem pengaduan pelanggan (Sipena) pada MBC Swalayan. Diagram use case tersebut adalah sebagai berikut:
 
-Gambar 3.1 Use Case Diagram Sipena
 ```mermaid
 graph TD
     %% Actors
-    ActorPelanggan["Pelanggan (Guest)"]
+    ActorPelanggan["Pelanggan (Konsumen)"]
     ActorAdmin["Admin (Karyawan/Staff)"]
     ActorSuperAdmin["Super Admin (Kepala Shift)"]
 
-    %% Boundaries
-    subgraph Sistem Pengaduan Pelanggan [Sipena]
+    subgraph Sipena [Sistem Pengaduan Pelanggan MBC Swalayan]
         UC1((Mengajukan Pengaduan))
         UC2((Melacak Tiket Pengaduan))
         UC3((Melihat Tanggapan Publik))
@@ -27,23 +25,21 @@ graph TD
         UC5((Mengelola Pengaduan))
         UC6((Eskalasi Tiket))
         UC7((Export Laporan))
-        UC8((Mengelola User))
-        UC9((Mengelola Pengaturan Landing Page))
+        UC8((Mengelola User Karyawan))
+        UC9((Mengatur Landing Page))
         UC10((Menghapus Pengaduan))
     end
 
-    %% Connections Pelanggan
+    %% Connections
     ActorPelanggan --> UC1
     ActorPelanggan --> UC2
     ActorPelanggan --> UC3
 
-    %% Connections Admin
     ActorAdmin --> UC4
     ActorAdmin --> UC5
     ActorAdmin --> UC6
     ActorAdmin --> UC7
 
-    %% Connections Super Admin
     ActorSuperAdmin --> UC4
     ActorSuperAdmin --> UC5
     ActorSuperAdmin --> UC7
@@ -51,115 +47,104 @@ graph TD
     ActorSuperAdmin --> UC9
     ActorSuperAdmin --> UC10
 
-    %% Style
-    style ActorPelanggan fill:#fff,stroke:#000,stroke-width:2px,color:#000
-    style ActorAdmin fill:#fff,stroke:#000,stroke-width:2px,color:#000
-    style ActorSuperAdmin fill:#fff,stroke:#000,stroke-width:2px,color:#000
-    style Sistem Pengaduan Pelanggan fill:#fff,stroke:#000,stroke-width:1px,color:#000
+    %% Styles
+    style ActorPelanggan fill:#fff,stroke:#000,stroke-width:2px
+    style ActorAdmin fill:#fff,stroke:#000,stroke-width:2px
+    style ActorSuperAdmin fill:#fff,stroke:#000,stroke-width:2px
+    style Sipena fill:#fff,stroke:#000,stroke-width:1px
 ```
+
+*Gambar 2.1. Use Case Diagram Sistem Informasi Pengaduan Pelanggan (Sipena) Pada MBC Swalayan.*
 
 ---
 
 ### 2) Activity Diagram
-Activity diagram menunjukkan aliran kerja workflow dari use case diagram. Berikut adalah activity diagram sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan:
+Activity diagram menunjukkan aliran kerja (workflow) dari use case diagram untuk masing-masing role pengguna.
 
 #### (1) Activity Diagram Admin
-Pada Gambar 3.2 berikut, merupakan activity diagram admin dalam mengelola data pada sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan:
+Pada Gambar 2.2 berikut, merupakan activity diagram admin dalam mengelola data pada sistem informasi pengaduan pelanggan MBC Swalayan mulai dari proses autentikasi login hingga melakukan aksi pengelolaan.
 
-Gambar 3.2 Activity Diagram Admin
 ```mermaid
 flowchart TD
     StartAdmin([Mulai]) --> FormLogin[Mengakses Halaman Login Admin]
     FormLogin --> InputAuth[Masukkan Username & Password]
     InputAuth --> SubmitLogin[Klik Login]
-    SubmitLogin --> CekAuth{Apakah Kredensial Valid?}
-    CekAuth -->|Tidak| TampilkanGagal[Tampilkan Pesan Error: Username/Password Salah]
-    TampilkanGagal --> FormLogin
-    CekAuth -->|Ya| Dashboard[Masuk ke Halaman Dashboard Admin]
-
-    Dashboard --> PilihMenu{Pilih Menu Utama}
-
-    %% Alur Kelola Pengaduan
-    PilihMenu -->|Kelola Pengaduan| TampilkanList[Lihat Daftar Pengaduan Masuk]
-    TampilkanList --> BukaDetail[Buka Detail Pengaduan]
-    BukaDetail --> PilihanAksi{Pilih Aksi Tindakan}
-
-    %% Sub Aksi Kelola
-    PilihanAksi -->|Ubah Status| UpdateStatus[Pilih Status Baru: Diproses/Selesai/Ditolak]
-    UpdateStatus --> SimpanStatus[Sistem Update Status & Tulis Log Perubahan]
+    SubmitLogin --> CekAuth{Kredensial Valid?}
     
-    PilihanAksi -->|Tulis Tanggapan| InputTanggapan[Tulis Tanggapan Publik / Catatan Internal]
-    InputTanggapan --> SimpanTanggapan[Sistem Menyimpan Tanggapan Baru]
+    CekAuth -->|Tidak| FormLogin
+    CekAuth -->|Ya| Dashboard[Masuk Halaman Dashboard Admin]
 
-    PilihanAksi -->|Eskalasi| Eskalasi[Klik Eskalasi ke Kepala Shift]
-    Eskalasi --> InputCatatan[Tulis Catatan Eskalasi]
-    InputCatatan --> SimpanEskalasi[Status berubah menjadi Menunggu Keputusan]
+    Dashboard --> PilihAksi{Pilih Aktivitas}
 
-    SimpanStatus --> SelesaiAksi[Kembali ke Halaman Detail / Dashboard]
-    SimpanTanggapan --> SelesaiAksi
-    SimpanEskalasi --> SelesaiAksi
+    %% Kelola
+    PilihAksi -->|Kelola Pengaduan| DetailPengaduan[Buka Detail Pengaduan]
+    DetailPengaduan --> AksiTindakan{Pilih Tindakan}
+    
+    AksiTindakan -->|Ubah Status| UpdateStatus[Simpan Perubahan Status & Riwayat]
+    AksiTindakan -->|Tulis Balasan| SimpanBalasan[Simpan Tanggapan Publik / Internal]
+    AksiTindakan -->|Eskalasi| SimpanEskalasi[Eskalasi Status ke Kepala Shift]
+    
+    UpdateStatus --> Dashboard
+    SimpanBalasan --> Dashboard
+    SimpanEskalasi --> Dashboard
 
-    %% Alur Export Laporan
-    PilihMenu -->|Export Laporan| FilterLaporan[Filter Berdasarkan Kategori/Status/Bulan/Tahun]
-    FilterLaporan --> CetakData[Unduh file CSV / Word / Cetak PDF]
-    CetakData --> Dashboard
+    %% Laporan
+    PilihAksi -->|Export Laporan| CetakLaporan[Cetak PDF / Unduh Word & CSV]
+    CetakLaporan --> Dashboard
 
-    PilihMenu -->|Logout| KeluarSistem[Logout dari Dashboard]
-    KeluarSistem --> EndAdmin([Selesai])
-    SelesaiAksi --> PilihMenu
+    %% Logout
+    PilihAksi -->|Logout| Logout[Keluar dari Sistem]
+    Logout --> EndAdmin([Selesai])
 
-    %% Style (B&W)
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
-    linkStyle default stroke:#000,stroke-width:1px,color:#000;
 ```
+*Gambar 2.2. Activity Diagram Admin Sistem Informasi Pengaduan Pelanggan (Sipena).*
+
+---
 
 #### (2) Activity Diagram Konsumen (Pelanggan)
-Pada Gambar 3.3 berikut merupakan activity diagram pada konsumen/pelanggan dalam menerima informasi, mengajukan keluhan, serta melacak status pengaduan pada sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan:
+Pada Gambar 2.3 berikut merupakan activity diagram pada konsumen dalam menerima informasi, melacak status pengaduan, dan mengirimkan keluhan pada sistem informasi pengaduan pelanggan MBC Swalayan.
 
-Gambar 3.3 Activity Diagram Konsumen/Pelanggan
 ```mermaid
 flowchart TD
-    StartPelanggan([Mulai]) --> MasukWeb[Mengakses Website Sipena]
-    MasukWeb --> PilihMenu{Pilih Aktivitas}
+    StartKonsumen([Mulai]) --> MasukWeb[Mengakses Website Sipena]
+    MasukWeb --> PilihMenu{Pilih Menu}
 
-    %% Alur Kirim Pengaduan
-    PilihMenu -->|Kirim Pengaduan| IsiForm[Mengisi Form Pengaduan]
-    IsiForm --> UploadFile[Unggah File Pendukung / Struk Belanja jika Return]
-    UploadFile --> Kirim[Klik Tombol Kirim Pengaduan]
-    Kirim --> ValidasiInput{Apakah Input Valid?}
-    ValidasiInput -->|Tidak| TampilkanError[Tampilkan Pesan Error / Validasi Form]
-    TampilkanError --> IsiForm
-    ValidasiInput -->|Ya| SimpanDb[Sistem Menyimpan Pengaduan ke Database]
-    SimpanDb --> GenerateTiket[Sistem Membuat Nomor Tiket & Token Unik]
-    GenerateTiket --> TampilkanTiket[Tampilkan Halaman Sukses & Nomor Tiket]
-    TampilkanTiket --> EndPelanggan
+    %% Kirim Pengaduan
+    PilihMenu -->|Kirim Keluhan| FormComplaint[Isi Form Pengaduan]
+    FormComplaint --> UploadBukti[Unggah Struk Belanja / Bukti Foto]
+    UploadBukti --> SubmitComplaint[Kirim Pengaduan]
+    SubmitComplaint --> Validasi{Input Valid?}
+    
+    Validasi -->|Tidak| FormComplaint
+    Validasi -->|Ya| SimpanData[Simpan & Generate Nomor Tiket & Token]
+    SimpanData --> TampilHalamanTiket[Tampilkan Tiket untuk Pelanggan]
+    TampilHalamanTiket --> EndKonsumen
 
-    %% Alur Tracking Pengaduan
-    PilihMenu -->|Lacak Pengaduan| InputLacak[Masukkan Nomor Tiket & Nomor WhatsApp]
-    InputLacak --> CariData[Sistem Mencari Data Tiket]
-    CariData --> CekData{Apakah Data Ditemukan?}
-    CekData -->|Tidak| MsgError[Tampilkan Pesan: Tiket Tidak Ditemukan]
-    MsgError --> InputLacak
-    CekData -->|Ya| TampilkanStatus[Tampilkan Status Pengaduan & Log Tanggapan]
-    TampilkanStatus --> EndPelanggan([Selesai])
+    %% Melacak Status
+    PilihMenu -->|Tracking Status| InputLacak[Masukkan Nomor Tiket & Nomor WhatsApp]
+    InputLacak --> CariTiket[Cari Data Pengaduan]
+    CariTiket --> CekTiket{Data Ditemukan?}
+    
+    CekTiket -->|Tidak| InputLacak
+    CekTiket -->|Ya| TampilkanStatus[Tampilkan Status & Riwayat Tanggapan]
+    TampilkanStatus --> EndKonsumen([Selesai])
 
-    %% Style (B&W)
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
-    linkStyle default stroke:#000,stroke-width:1px,color:#000;
 ```
+*Gambar 2.3. Activity Diagram Konsumen Sistem Informasi Pengaduan Pelanggan (Sipena).*
 
 ---
 
 ## 3. Desain Prosedur Sistem Yang Diusulkan
-Proses desain akan menerjemahkan sebuah perancangan perangkat lunak yang dimana sebelumnya diperkirakan untuk diimplementasikan ke koding. Berikut adalah langkah untuk melakukan desain sistem: desain database dan desain interface.
+Proses desain akan menerjemahkan sebuah perancangan perangkat lunak yang di mana sebelumnya diperkirakan untuk diimplementasikan ke koding. Berikut adalah langkah untuk melakukan desain sistem: desain database dan desain interface.
 
 ### a. Desain Database
-Desain database terbagi menjadi 2 yaitu ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan dan tabel.
+Desain database terbagi menjadi 2 yaitu ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan pada MBC Swalayan dan tabel.
 
-#### 1) ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan
-Berdasarkan Gambar 3.5. ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan (Sipena) pada MBC Swalayan terbagi menjadi 5 tabel (users, complaints, complaint_responses, status_logs, dan landing_settings) dimana pada setiap entitas memiliki beberapa atribut.
+#### 1) ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan pada MBC Swalayan
+Berdasarkan Gambar 3.1, ERD (Entity Relationship Diagram) sistem informasi pengaduan pelanggan Pada MBC Swalayan terbagi menjadi 5 tabel (`users`, `complaints`, `complaint_responses`, `status_logs`, dan `landing_settings`) di mana pada setiap entitas memiliki beberapa atribut.
 
-Gambar 3.5 ERD Notasi Chen Sipena
 ```mermaid
 flowchart TD
     %% ENTITIES (Persegi Panjang)
@@ -178,8 +163,6 @@ flowchart TD
     R6{memiliki}
 
     %% ATTRIBUTES (Bulat Lonjong)
-    
-    %% Users Attributes
     u_id(["<u>id</u>"])
     u_nama(["nama"])
     u_username(["username"])
@@ -196,7 +179,6 @@ flowchart TD
     U --- u_is_active
     U --- u_last_login
 
-    %% Complaints Attributes
     c_id(["<u>id</u>"])
     c_ticket(["ticket_no"])
     c_token(["public_token"])
@@ -223,7 +205,6 @@ flowchart TD
     C --- c_status
     C --- c_closed
 
-    %% Complaint Responses Attributes
     cr_id(["<u>id</u>"])
     cr_sender(["sender_role"])
     cr_vis(["visibility"])
@@ -236,7 +217,6 @@ flowchart TD
     CR --- cr_msg
     CR --- cr_att
 
-    %% Status Logs Attributes
     sl_id(["<u>id</u>"])
     sl_old(["old_status"])
     sl_new(["new_status"])
@@ -247,7 +227,6 @@ flowchart TD
     SL --- sl_new
     SL --- sl_note
 
-    %% Landing Settings Attributes
     ls_id(["<u>id</u>"])
     ls_key(["setting_key"])
     ls_val(["setting_value"])
@@ -256,33 +235,26 @@ flowchart TD
     LS --- ls_key
     LS --- ls_val
 
-    %% RELATIONSHIP CONNECTIONS (Sesuai Struktur Relasi di Database)
-    
-    %% Users - menangani - Complaints (1 to N)
+    %% CONNECTIONS
     U ---|1| R1
     R1 -->|N| C
     
-    %% Users - menerima - Complaints (1 to N, eskalasi)
     U ---|1| R2
     R2 -->|N| C
     
-    %% Users - menulis - Responses (1 to N)
     U ---|1| R3
     R3 -->|N| CR
     
-    %% Users - mengubah - Logs (1 to N)
     U ---|1| R4
     R4 -->|N| SL
     
-    %% Complaints - memiliki - Responses (1 to N)
     C ---|1| R5
     R5 -->|N| CR
     
-    %% Complaints - memiliki - Logs (1 to N)
     C ---|1| R6
     R6 -->|N| SL
 
-    %% STYLING (Monokromatik: Lingkaran/Bentuk Putih, Font & Line Hitam)
+    %% STYLING
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
     classDef entity fill:#fff,stroke:#000,stroke-width:2px,color:#000;
     classDef relationship fill:#fff,stroke:#000,stroke-width:2px,color:#000;
@@ -291,113 +263,97 @@ flowchart TD
     class R1,R2,R3,R4,R5,R6 relationship;
     linkStyle default stroke:#000,stroke-width:1.5px,color:#000;
 ```
+*Gambar 3.1. Entity Relationship Diagram (ERD) Sipena MBC Swalayan.*
 
 ---
 
 #### 2) Tabel
-Tabel database atau basis data adalah kumpulan file yang berkaitan dengan program, yang dimana untuk menyimpan data sistem informasi pengaduan pelanggan (Sipena) Pada MBC Swalayan dibutuhkan database. Berikut ini adalah tabel – tabel yang berada dalam database :
+Tabel database atau basis data adalah kumpulan file yang berkaitan dengan program, yang di mana untuk menyimpan data sistem informasi pengaduan pelanggan pada MBC Swalayan dibutuhkan database. Berikut ini adalah tabel – tabel yang berada dalam database:
 
-##### (1) Tabel users
-Tabel users diperlukan untuk menyimpan data akun karyawan atau pengguna sistem dan berfungsi untuk proses autentikasi (login) serta pengaturan hak akses dashboard. Dibawah ini adalah struktur tabel users:
+##### (1) Tabel `users`
+Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfungsi untuk memproses otentikasi login serta identifikasi hak akses level pengguna (Admin / Super Admin).
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
 | `id` | bigint | Primary Key, Auto Increment | ID unik pengguna |
-| `nama` | string(255) | Not Null | Nama lengkap pengguna |
-| `username` | string(255) | Unique, Not Null | Nama pengguna untuk login |
-| `password` | string(255) | Not Null | Kata sandi yang telah di-hash (Bcrypt) |
-| `role` | enum('admin', 'super_admin') | Not Null, Default: 'admin' | Hak akses level pengguna |
+| `nama` | string(255) | Not Null | Nama lengkap admin/super admin |
+| `username` | string(255) | Unique, Not Null | Nama pengguna untuk akses masuk |
+| `password` | string(255) | Not Null | Kata sandi terenkripsi |
+| `role` | enum('admin','super_admin') | Not Null, Default: 'admin' | Otoritas hak akses |
 | `is_active` | boolean | Default: true | Status keaktifan akun pengguna |
-| `last_login` | datetime | Nullable | Catatan waktu login terakhir |
-| `created_at` | timestamp | Nullable | Waktu pembuatan baris data |
-| `updated_at` | timestamp | Nullable | Waktu perubahan terakhir data |
+| `last_login` | datetime | Nullable | Waktu login terakhir |
 
-##### (2) Tabel complaints
-Tabel complaints diperlukan untuk menyimpan data seluruh keluhan atau pengaduan yang diajukan oleh konsumen dan berfungsi sebagai tabel inti penyimpanan data laporan keluhan. Dibawah ini adalah struktur tabel complaints:
+##### (2) Tabel `complaints`
+Tabel `complaints` diperlukan untuk merekam seluruh rincian keluhan masuk yang diajukan oleh konsumen.
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID unik pengaduan |
-| `ticket_no` | string(30) | Unique, Index, Not Null | Nomor tiket keluhan (Format: SPN-YYYYMMDD-XXXX) |
-| `public_token` | string(100) | Unique, Not Null | Token rahasia untuk melacak pengaduan publik |
-| `nama_pelanggan`| string(100) | Not Null | Nama lengkap pelapor |
-| `nomor_wa` | string(30) | Not Null | Nomor WhatsApp pelapor |
-| `nomor_wa_clean`| string(30) | Index, Not Null | Nomor WhatsApp pelapor (hanya angka) untuk pencarian |
-| `kategori` | enum(...) | Index, Not Null | Kategori keluhan: 'pelayanan', 'return_produk', 'produk', 'masalah_lain' |
-| `kategori_lain` | string(150) | Nullable | Spesifikasi keluhan jika memilih kategori 'masalah_lain' |
-| `keterangan` | text | Nullable | Uraian lengkap mengenai kronologi keluhan |
-| `struk_file` | string(255) | Nullable | Path lokasi file unggah struk belanja (wajib untuk return_produk) |
-| `dokumen_file` | string(255) | Nullable | Path lokasi file unggah dokumen bukti pendukung lainnya |
-| `status` | enum(...) | Index, Not Null, Default: 'diajukan' | Status pengaduan: 'diajukan', 'diproses', 'diteruskan', 'menunggu_keputusan', 'ditanggapi', 'selesai', 'ditolak' |
-| `assigned_admin_id` | bigint | Foreign Key (users), Nullable | ID Admin yang ditugaskan menangani pengaduan |
-| `escalated_to_id` | bigint | Foreign Key (users), Nullable | ID Super Admin tempat tiket ini dieskalasikan |
-| `created_at` | timestamp | Index, Nullable | Tanggal pengaduan diajukan oleh pelanggan |
-| `updated_at` | timestamp | Nullable | Tanggal perubahan data pengaduan |
-| `closed_at` | datetime | Nullable | Tanggal keluhan dinyatakan selesai/ditutup |
+| `id` | bigint | Primary Key, Auto Increment | ID keluhan |
+| `ticket_no` | string(30) | Unique, Not Null | Nomor tiket keluhan otomatis |
+| `public_token` | string(100) | Unique, Not Null | Token pelacakan halaman publik |
+| `nama_pelanggan`| string(100) | Not Null | Nama lengkap konsumen |
+| `nomor_wa` | string(30) | Not Null | Nomor WhatsApp konsumen |
+| `kategori` | enum(...) | Not Null | Kategori keluhan |
+| `keterangan` | text | Nullable | Detail keluhan konsumen |
+| `struk_file` | string(255) | Nullable | Unggah struk belanja |
+| `dokumen_file` | string(255) | Nullable | Dokumen bukti pendukung |
+| `status` | enum(...) | Not Null, Default: 'diajukan' | Status progres keluhan |
+| `assigned_admin_id`| bigint | FK (users), Nullable | ID admin yang menangani keluhan |
+| `escalated_to_id`| bigint | FK (users), Nullable | ID Kepala Shift untuk eskalasi |
 
-##### (3) Tabel complaint_responses
-Tabel complaint_responses diperlukan untuk menyimpan data percakapan/tanggapan dari keluhan dan berfungsi untuk pencatatan respons dari admin maupun internal catatan staff. Dibawah ini adalah struktur tabel complaint_responses:
+##### (3) Tabel `complaint_responses`
+Tabel `complaint_responses` diperlukan untuk mendata percakapan dan respon balasan dari staff admin maupun sistem.
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID unik tanggapan |
-| `complaint_id` | bigint | Foreign Key (complaints), Not Null | ID pengaduan yang ditanggapi |
-| `user_id` | bigint | Foreign Key (users), Nullable | ID pengguna (staff) yang membalas |
-| `sender_role` | enum('admin','super_admin','system') | Default: 'admin' | Peran dari pengirim tanggapan |
-| `visibility` | enum('internal','public') | Index, Default: 'internal' | Visibilitas tanggapan: 'internal' atau 'public' |
-| `message` | text | Not Null | Isi teks tanggapan |
-| `attachment_file` | string(255) | Nullable | Path lokasi file dokumen lampiran pendukung tanggapan |
-| `created_at` | timestamp | Index, Nullable | Tanggal tanggapan dikirimkan |
-| `updated_at` | timestamp | Nullable | Tanggal perubahan tanggapan |
+| `id` | bigint | Primary Key | ID unik respon |
+| `complaint_id` | bigint | FK (complaints), Not Null | Keterkaitan dengan ID keluhan |
+| `user_id` | bigint | FK (users), Nullable | ID admin pembuat respon |
+| `visibility` | enum('internal','public') | Not Null | Status visibilitas balasan |
+| `message` | text | Not Null | Isi teks balasan |
+| `attachment_file`| string(255) | Nullable | File lampiran balasan |
 
-##### (4) Tabel status_logs
-Tabel status_logs diperlukan untuk mencatat riwayat perubahan status keluhan dan berfungsi sebagai jejak audit (audit trail) penanganan tiket. Dibawah ini adalah struktur tabel status_logs:
+##### (4) Tabel `status_logs`
+Tabel `status_logs` diperlukan untuk mencatat riwayat perubahan status pelaporan keluhan secara berurutan.
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID unik log status |
-| `complaint_id` | bigint | Foreign Key (complaints), Not Null | ID pengaduan yang mengalami perubahan status |
-| `old_status` | string(50) | Nullable | Status sebelum diubah |
-| `new_status` | string(50) | Not Null | Status baru setelah diubah |
-| `changed_by` | bigint | Foreign Key (users), Nullable | ID pengguna (staff) yang melakukan perubahan status |
-| `note` | text | Nullable | Alasan atau catatan tambahan terkait perubahan status |
-| `created_at` | timestamp | Index, Nullable | Tanggal log status dicatat |
-| `updated_at` | timestamp | Nullable | Tanggal log status diperbarui |
+| `id` | bigint | Primary Key | ID log status |
+| `complaint_id` | bigint | FK (complaints), Not Null | ID pengaduan |
+| `old_status` | string(50) | Nullable | Status lama |
+| `new_status` | string(50) | Not Null | Status baru |
+| `changed_by` | bigint | FK (users), Nullable | ID staff pengubah status |
+| `note` | text | Nullable | Catatan/alasan perubahan status |
 
-##### (5) Tabel landing_settings
-Tabel landing_settings diperlukan untuk menyimpan konten dinamis halaman depan (landing page) dan berfungsi untuk kustomisasi tampilan teks dan video oleh Super Admin. Dibawah ini adalah struktur tabel landing_settings:
+##### (5) Tabel `landing_settings`
+Tabel `landing_settings` diperlukan untuk menampung pengaturan data antarmuka halaman beranda secara dinamis.
 
 | Nama Kolom | Tipe Data | Atribut | Deskripsi |
 | :--- | :--- | :--- | :--- |
-| `id` | bigint | Primary Key, Auto Increment | ID unik pengaturan |
-| `setting_key` | string(100) | Unique, Not Null | Kata kunci pengaturan (contoh: `running_text`, `youtube_url`) |
-| `setting_value`| text | Nullable | Nilai teks atau konten dari pengaturan |
-| `created_at` | timestamp | Nullable | Tanggal konfigurasi dibuat |
-| `updated_at` | timestamp | Nullable | Tanggal konfigurasi diperbarui |
+| `id` | bigint | Primary Key | ID pengaturan |
+| `setting_key` | string(100) | Unique, Not Null | Kode kunci konfigurasi |
+| `setting_value`| text | Nullable | Nilai isi konfigurasi |
 
 ---
 
 #### 3) Relasi Tabel
-Berdasarkan Gambar 3.6 relasi tabel ini memiliki 5 tabel, yaitu tabel users, complaints, complaint_responses, status_logs, dan landing_settings. Dibawah ini adalah Gambar 3.6. Berikut relasi tabel:
+Berdasarkan Gambar 3.2 relasi tabel ini memiliki 5 tabel, yaitu tabel `users`, `complaints`, `complaint_responses`, `status_logs`, dan `landing_settings`. Berikut relasi tabel:
 
-Gambar 3.6 Skema Relasi Database (Physical Data Model)
 ```mermaid
 erDiagram
     users {
         bigint id PK
         string nama
-        string username UK
+        string username
         string password
         enum role
         boolean is_active
         datetime last_login
-        timestamp created_at
-        timestamp updated_at
     }
     complaints {
         bigint id PK
-        string ticket_no UK
-        string public_token UK
+        string ticket_no
+        string public_token
         string nama_pelanggan
         string nomor_wa
         string nomor_wa_clean
@@ -409,9 +365,6 @@ erDiagram
         enum status
         bigint assigned_admin_id FK
         bigint escalated_to_id FK
-        timestamp created_at
-        timestamp updated_at
-        datetime closed_at
     }
     complaint_responses {
         bigint id PK
@@ -421,8 +374,6 @@ erDiagram
         enum visibility
         text message
         string attachment_file
-        timestamp created_at
-        timestamp updated_at
     }
     status_logs {
         bigint id PK
@@ -431,118 +382,110 @@ erDiagram
         string new_status
         bigint changed_by FK
         text note
-        timestamp created_at
-        timestamp updated_at
     }
     landing_settings {
         bigint id PK
-        string setting_key UK
+        string setting_key
         text setting_value
-        timestamp created_at
-        timestamp updated_at
     }
 
-    users ||--o{ complaints : "menangani (assigned_admin)"
-    users ||--o{ complaints : "menerima eskalasi (escalated_to)"
-    users ||--o{ complaint_responses : "memberikan respons"
-    users ||--o{ status_logs : "mengubah status (changed_by)"
-    complaints ||--o{ complaint_responses : "memiliki tanggapan"
-    complaints ||--o{ status_logs : "memiliki riwayat status"
+    users ||--o{ complaints : "menangani (assigned_admin_id)"
+    users ||--o{ complaints : "menerima (escalated_to_id)"
+    users ||--o{ complaint_responses : "menulis (user_id)"
+    users ||--o{ status_logs : "mengubah (changed_by)"
+    complaints ||--o{ complaint_responses : "memiliki (complaint_id)"
+    complaints ||--o{ status_logs : "memiliki (complaint_id)"
 ```
-
-Penjelasan Relasi Database:
-- **Relasi Antara `users` dengan `complaints`**: Satu admin (`users`) dapat menangani nol hingga banyak tiket pengaduan (`complaints`). Namun, setiap pengaduan hanya dapat dialokasikan penanganannya kepada maksimal satu admin.
-- **Relasi Eskalasi Antara `users` dengan `complaints`**: Satu Kepala Shift (`users` dengan level `super_admin`) dapat menerima eskalasi dari banyak pengaduan. Namun, satu keluhan hanya dapat dieskalasikan statusnya kepada maksimal satu Kepala Shift.
-- **Relasi Antara `complaints` dengan `complaint_responses`**: Satu tiket pengaduan pelanggan dapat memiliki banyak tanggapan pesan, sedangkan setiap pesan tanggapan hanya dapat merujuk ke satu tiket pengaduan yang bersangkutan.
-- **Relasi Antara `users` dengan `complaint_responses`**: Satu user sistem dapat menulis banyak pesan tanggapan pengaduan, sedangkan setiap pesan tanggapan hanya dapat diidentifikasi kepemilikan penulisnya oleh satu user sistem saja.
-- **Relasi Antara `complaints` dengan `status_logs`**: Satu pengaduan dapat menghasilkan banyak log riwayat perubahan status seiring berjalannya proses penanganan, sedangkan setiap log riwayat status hanya mendokumentasikan perubahan pada satu pengaduan saja.
-- **Relasi Antara `users` dengan `status_logs`**: Satu admin dapat memicu pencatatan banyak log perubahan status akibat tindakannya memperbarui tiket pengaduan, sedangkan setiap baris log perubahan status hanya mencatat satu admin yang melakukan tindakan perubahan tersebut.
+*Gambar 3.2. Relasi Tabel Database Sipena MBC Swalayan.*
 
 ---
 
 ### b. Desain Interface
-Desain interface menjabarkan rancangan antarmuka visual halaman sistem pengaduan pelanggan (Sipena) pada MBC Swalayan baik dari sisi pelanggan maupun sisi administratif.
 
-#### 1) Rancangan Form Login
-Tampilan form login digunakan untuk memverifikasi akun Admin dan Super Admin sebelum masuk ke dashboard pengelolaan data. Berikut adalah Gambar 3.7. Form Login:
+#### 1) Rancangan Form Login Admin
+Tampilan form login digunakan untuk memberikan hak akses kepada administrator (Admin/Super Admin) untuk masuk ke halaman dashboard internal sistem. Form ini adalah sebagai berikut:
 
-Gambar 3.7 Rancangan Form Login
+##### Halaman Form Login Admin
 ```
-+-----------------------------------------------------------+
-|                      LOGIN ADMIN                          |
-+-----------------------------------------------------------+
-|                                                           |
-|  Username: [__________________________________________ ]  |
-|  Password: [__________________________________________ ]  |
-|                                                           |
-|               [           MASUK           ]               |
-+-----------------------------------------------------------+
++-------------------------------------------------------------------+
+|                            LOGIN ADMIN                            |
++-------------------------------------------------------------------+
+|                                                                   |
+|   Username : [_________________________________________________]  |
+|                                                                   |
+|   Password : [_________________________________________________]  |
+|                                                                   |
+|                       [ MASUK ]                                   |
+|                                                                   |
++-------------------------------------------------------------------+
 ```
+*Gambar 3.3. Rancangan Form Login Admin.*
 
-#### 2) Rancangan Form Pengaduan
-Tampilan form pengaduan digunakan oleh pelanggan/konsumen untuk mengisi data pengaduan online. Berikut adalah Gambar 3.8. Form Pengaduan:
+##### Tabel 3.1. Rancangan Tombol Form Login Admin
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `MASUK` | Berfungsi untuk mengirimkan kredensial (username & password) ke sistem untuk divalidasi. Jika sukses, admin dialihkan ke halaman dashboard. |
 
-Gambar 3.8 Rancangan Form Pengaduan
-```
-+-----------------------------------------------------------+
-|                   FORM PENGADUAN BARU                     |
-+-----------------------------------------------------------+
-|  Nama Pelanggan: [_____________________________________]  |
-|  Nomor WhatsApp: [_____________________________________]  |
-|  Pilihan Masalah: [Pelayanan / Produk / Return / Lain  v] |
-|  Upload Struk Belanja: [ Choose File  ] (untuk return)    |
-|  Upload Dokumen Bukti: [ Choose File  ] (opsional)        |
-|  Keterangan Masalah:                                      |
-|  [                                                     ]  |
-|  [                                                     ]  |
-|                                                           |
-|               [       KIRIM PENGADUAN      ]              |
-+-----------------------------------------------------------+
-```
+---
 
-#### 3) Rancangan Halaman Beranda (Landing Page)
-Tampilan halaman beranda adalah halaman utama ketika mengakses website sistem pengaduan pelanggan (Sipena). Halaman ini menampilkan video informasi, running text, jam operasional, dan tracking tiket. Berikut adalah Gambar 3.9. Halaman Beranda:
+#### 2) Rancangan Form Pengaduan (Konsumen)
+Tampilan halaman pengaduan adalah halaman formulir publik ketika konsumen mengakses website sistem pengaduan untuk menulis keluhan. Rancangan ini adalah sebagai berikut:
 
-Gambar 3.9 Rancangan Halaman Beranda
+##### Halaman Form Pengaduan Konsumen
 ```
-+-----------------------------------------------------------+
-|  [Running Text: Selamat datang di Sipena MBC Swalayan...] |
-+-----------------------------------------------------------+
-|  Sipena MBC Swalayan                   [Form] [Tracking]  |
-+-----------------------------------------------------------+
-|                                                           |
-|  SISTEM PENGADUAN ONLINE          +--------------------+  |
-|  Sampaikan pengaduan Anda         |                    |  |
-|  secara daring dan pantau         |   Video YouTube    |  |
-|  statusnya via nomor tiket.       |                    |  |
-|                                   +--------------------+  |
-|  [ Buat Pengaduan ]               Jam layanan:         |  |
-|                                   08.00 - 21.00 WIB    |  |
-|                                                           |
-+-----------------------------------------------------------+
-|  Lacak Pengaduan (Tracking Tiket)                         |
-|  Nomor Tiket: [___________]  Nomor WA: [___________]      |
-|  [ Cek Status ]                                           |
-+-----------------------------------------------------------+
++-------------------------------------------------------------------+
+|                   FORMULIR PENGADUAN PELANGGAN                    |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nama Pelanggan : [____________________________________________]  |
+|                                                                   |
+|  Nomor WhatsApp : [____________________________________________]  |
+|                                                                   |
+|  Kategori       : [ Pelayanan / Produk / Return / Masalah Lain v] |
+|                                                                   |
+|  Struk Belanja  : [ Pilih File ] (Wajib jika kategori return)     |
+|                                                                   |
+|  Dokumen Bukti  : [ Pilih File ] (Opsional)                       |
+|                                                                   |
+|  Keterangan     :                                                 |
+|  +-------------------------------------------------------------+  |
+|  | Tulis isi keluhan Anda di sini...                           |  |
+|  +-------------------------------------------------------------+  |
+|                                                                   |
+|                       [ KIRIM ADUAN ]                             |
+|                                                                   |
++-------------------------------------------------------------------+
 ```
+*Gambar 3.4. Rancangan Form Pengaduan Konsumen.*
 
-#### 4) Rancangan Halaman Dashboard Admin
-Tampilan halaman dashboard admin adalah halaman setelah admin berhasil login ke dalam sistem pengaduan. Halaman ini digunakan oleh admin untuk mengelola pengaduan masuk, memperbarui status, memberi tanggapan, dan melakukan ekspor laporan. Berikut adalah Gambar 3.10. Halaman Dashboard Admin:
+##### Tabel 3.2. Rancangan Tombol Form Pengaduan Konsumen
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `Pilih File` | Membuka galeri/penyimpanan perangkat untuk memilih dokumen struk belanja atau dokumen bukti. |
+| 2 | `KIRIM ADUAN`| Mengirimkan data formulir keluhan pelanggan ke database dan membuat nomor tiket otomatis. |
 
-Gambar 3.10 Rancangan Halaman Dashboard Admin
+---
+
+#### 3) Rancangan Halaman Tracking (Konsumen)
+Tampilan halaman tracking digunakan oleh konsumen untuk melacak status aduan dengan nomor tiket mereka. Rancangan ini adalah sebagai berikut:
+
+##### Halaman Tracking Pengaduan
 ```
-+-----------------------------------------------------------+
-|  Dashboard Admin                  [Pengaduan] [Laporan]   |
-+-----------------------------------------------------------+
-|  Selamat Datang, Admin                                    |
-|  Total Pengaduan: 120 | Diproses: 15 | Selesai: 95        |
-+-----------------------------------------------------------+
-|  Daftar Pengaduan Terbaru                                 |
-|  +--------------+-------------------+-------------+-----+  |
-|  | No. Tiket    | Nama Pelanggan    | Status      |Aksi |  |
-|  +--------------+-------------------+-------------+-----+  |
-|  | SPN-001      | Budi              | Diajukan    |[Lihat] |  |
-|  | SPN-002      | Ani               | Diproses    |[Lihat] |  |
-|  +--------------+-------------------+-------------+-----+  |
-+-----------------------------------------------------------+
++-------------------------------------------------------------------+
+|                     CEK STATUS PENGADUAN                          |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nomor Tiket    : [ Contoh: SPN-20260612-0001 _________________]  |
+|                                                                   |
+|  Nomor WhatsApp : [ Contoh: 081234567890 ______________________]  |
+|                                                                   |
+|                       [ LACAK STATUS ]                            |
+|                                                                   |
++-------------------------------------------------------------------+
 ```
+*Gambar 3.5. Rancangan Halaman Tracking.*
+
+##### Tabel 3.3. Rancangan Tombol Halaman Tracking
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `LACAK STATUS` | Melakukan pencarian tiket pengaduan di database. Jika ditemukan, menampilkan halaman riwayat detail dan progress keluhan. |
