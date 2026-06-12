@@ -349,22 +349,28 @@ flowchart TD
     %% RELATIONSHIP CONNECTIONS (Sesuai Struktur Relasi di Database)
     
     %% Users - menangani - Complaints (1 to N)
-    U -- "1" --- R1 --- "N" --> C
+    U ---|1| R1
+    R1 -->|N| C
     
     %% Users - menerima - Complaints (1 to N, eskalasi)
-    U -- "1" --- R2 --- "N" --> C
+    U ---|1| R2
+    R2 -->|N| C
     
     %% Users - menulis - Responses (1 to N)
-    U -- "1" --- R3 --- "N" --> CR
+    U ---|1| R3
+    R3 -->|N| CR
     
     %% Users - mengubah - Logs (1 to N)
-    U -- "1" --- R4 --- "N" --> SL
+    U ---|1| R4
+    R4 -->|N| SL
     
     %% Complaints - memiliki - Responses (1 to N)
-    C -- "1" --- R5 --- "N" --> CR
+    C ---|1| R5
+    R5 -->|N| CR
     
     %% Complaints - memiliki - Logs (1 to N)
-    C -- "1" --- R6 --- "N" --> SL
+    C ---|1| R6
+    R6 -->|N| SL
 ```
 
 ### Panduan Impor Langsung ke Draw.io
