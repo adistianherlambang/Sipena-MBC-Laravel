@@ -191,179 +191,155 @@ flowchart TD
 
 ---
 
-## 3. Entity Relationship Diagram (ERD) - Draw.io Import Ready
+## 3. Entity Relationship Diagram (ERD) - Notasi Chen (Draw.io Ready)
 
-Untuk membuat ERD secara instan di Draw.io, Anda dapat memilih salah satu metode impor di bawah ini.
+Dalam penulisan skripsi akademik, ERD sering kali diwajibkan menggunakan **Notasi Chen** tradisional yang terdiri atas:
+- **Persegi Panjang (Rectangles)** untuk merepresentasikan **Entitas**.
+- **Bulat Lonjong / Elips (Ovals/Stadia)** untuk merepresentasikan **Atribut** (dengan garis bawah `<u>...</u>` untuk Primary Key).
+- **Belah Ketupat / Diamond (Diamonds)** untuk merepresentasikan **Relasi/Hubungan** antarentitas beserta kardinalitasnya (1 ke N).
 
-### METODE 1: Impor melalui Script DDL SQL (Sangat Direkomendasikan)
-Gunakan kode DDL SQL di bawah ini untuk membuat tabel beserta relasinya secara otomatis di Draw.io:
+### Diagram ERD Notasi Chen
+Berikut adalah visualisasi ERD Chen yang siap dirender secara langsung di Markdown dan dapat Anda impor langsung ke **Draw.io**:
 
-1. Buka [Draw.io](https://app.diagrams.net/).
-2. Pada menu atas, klik **Arrange** > **Insert** > **Advanced** > **SQL...** (atau klik ikon **`+`** di toolbar > **Advanced** > **SQL...**).
-3. Hapus teks default, lalu salin dan tempel kode SQL berikut:
+```mermaid
+flowchart TD
+    %% Entities (Rectangles)
+    U[users]
+    C[complaints]
+    CR[complaint_responses]
+    SL[status_logs]
+    LS[landing_settings]
 
-```sql
-CREATE TABLE users (
-    id INT PRIMARY KEY,
-    nama VARCHAR(255),
-    username VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
-    role VARCHAR(50),
-    is_active BOOLEAN,
-    last_login DATETIME,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
+    style U fill:#fff,stroke:#333,stroke-width:2px
+    style C fill:#fff,stroke:#333,stroke-width:2px
+    style CR fill:#fff,stroke:#333,stroke-width:2px
+    style SL fill:#fff,stroke:#333,stroke-width:2px
+    style LS fill:#fff,stroke:#333,stroke-width:2px
 
-CREATE TABLE complaints (
-    id INT PRIMARY KEY,
-    ticket_no VARCHAR(30) UNIQUE,
-    public_token VARCHAR(100) UNIQUE,
-    nama_pelanggan VARCHAR(100),
-    nomor_wa VARCHAR(30),
-    nomor_wa_clean VARCHAR(30),
-    kategori VARCHAR(50),
-    kategori_lain VARCHAR(150),
-    keterangan TEXT,
-    struk_file VARCHAR(255),
-    dokumen_file VARCHAR(255),
-    status VARCHAR(50),
-    assigned_admin_id INT,
-    escalated_to_id INT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    closed_at DATETIME,
-    FOREIGN KEY (assigned_admin_id) REFERENCES users(id),
-    FOREIGN KEY (escalated_to_id) REFERENCES users(id)
-);
+    %% Relationships (Diamonds)
+    R_menangani{menangani}
+    R_menerima{menerima}
+    R_menulis{menulis}
+    R_mengubah{mengubah}
+    R_memiliki_resp{memiliki}
+    R_memiliki_log{memiliki}
 
-CREATE TABLE complaint_responses (
-    id INT PRIMARY KEY,
-    complaint_id INT,
-    user_id INT,
-    sender_role VARCHAR(50),
-    visibility VARCHAR(50),
-    message TEXT,
-    attachment_file VARCHAR(255),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (complaint_id) REFERENCES complaints(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
+    style R_menangani fill:#fff,stroke:#333,stroke-width:2px
+    style R_menerima fill:#fff,stroke:#333,stroke-width:2px
+    style R_menulis fill:#fff,stroke:#333,stroke-width:2px
+    style R_mengubah fill:#fff,stroke:#333,stroke-width:2px
+    style R_memiliki_resp fill:#fff,stroke:#333,stroke-width:2px
+    style R_memiliki_log fill:#fff,stroke:#333,stroke-width:2px
 
-CREATE TABLE status_logs (
-    id INT PRIMARY KEY,
-    complaint_id INT,
-    old_status VARCHAR(50),
-    new_status VARCHAR(50),
-    changed_by INT,
-    note TEXT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP,
-    FOREIGN KEY (complaint_id) REFERENCES complaints(id),
-    FOREIGN KEY (changed_by) REFERENCES users(id)
-);
+    %% Attributes for users (Ovals)
+    u1(["<u>id</u>"])
+    u2(["nama"])
+    u3(["username"])
+    u4(["password"])
+    u5(["role"])
+    u6(["is_active"])
+    u7(["last_login"])
 
-CREATE TABLE landing_settings (
-    id INT PRIMARY KEY,
-    setting_key VARCHAR(100) UNIQUE,
-    setting_value TEXT,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
+    U --- u1
+    U --- u2
+    U --- u3
+    U --- u4
+    U --- u5
+    U --- u6
+    U --- u7
+
+    %% Attributes for complaints (Ovals)
+    c1(["<u>id</u>"])
+    c2(["ticket_no"])
+    c3(["public_token"])
+    c4(["nama_pelanggan"])
+    c5(["nomor_wa"])
+    c6(["kategori"])
+    c7(["kategori_lain"])
+    c8(["keterangan"])
+    c9(["struk_file"])
+    c10(["dokumen_file"])
+    c11(["status"])
+    c12(["closed_at"])
+
+    C --- c1
+    C --- c2
+    C --- c3
+    C --- c4
+    C --- c5
+    C --- c6
+    C --- c7
+    C --- c8
+    C --- c9
+    C --- c10
+    C --- c11
+    C --- c12
+
+    %% Attributes for complaint_responses (Ovals)
+    cr1(["<u>id</u>"])
+    cr2(["sender_role"])
+    cr3(["visibility"])
+    cr4(["message"])
+    cr5(["attachment_file"])
+
+    CR --- cr1
+    CR --- cr2
+    CR --- cr3
+    CR --- cr4
+    CR --- cr5
+
+    %% Attributes for status_logs (Ovals)
+    sl1(["<u>id</u>"])
+    sl2(["old_status"])
+    sl3(["new_status"])
+    sl4(["note"])
+
+    SL --- sl1
+    SL --- sl2
+    SL --- sl3
+    SL --- sl4
+
+    %% Attributes for landing_settings (Ovals)
+    ls1(["<u>id</u>"])
+    ls2(["setting_key"])
+    ls3(["setting_value"])
+
+    LS --- ls1
+    LS --- ls2
+    LS --- ls3
+
+    %% Connections with cardinalities (Users & Complaints)
+    U -- "1" --- R_menangani
+    R_menangani --- "N" --> C
+    
+    U -- "1" --- R_menerima
+    R_menerima --- "N" --> C
+    
+    %% Users & Responses
+    U -- "1" --- R_menulis
+    R_menulis --- "N" --> CR
+    
+    %% Users & Logs
+    U -- "1" --- R_mengubah
+    R_mengubah --- "N" --> SL
+    
+    %% Complaints & Responses
+    C -- "1" --- R_memiliki_resp
+    R_memiliki_resp --- "N" --> CR
+    
+    %% Complaints & Logs
+    C -- "1" --- R_memiliki_log
+    R_memiliki_log --- "N" --> SL
 ```
 
-4. Klik tombol **Insert**. Draw.io akan otomatis menggambar seluruh kotak tabel dengan atribut kolom beserta relasi garisnya.
-
----
-
-### METODE 2: Impor melalui Script PlantUML
-Jika Anda lebih menyukai representasi ERD berbasis visual UML:
-
-1. Buka [Draw.io](https://app.diagrams.net/).
-2. Klik **Arrange** > **Insert** > **Advanced** > **PlantUML...** (atau klik ikon **`+`** di toolbar > **Advanced** > **PlantUML...**).
-3. Salin dan tempel kode berikut:
-
-```plantuml
-@startuml
-entity "users" {
-  * id : INT <<PK>>
-  --
-  * nama : VARCHAR(255)
-  * username : VARCHAR(255) <<UNIQUE>>
-  * password : VARCHAR(255)
-  * role : VARCHAR(50)
-  * is_active : BOOLEAN
-  last_login : DATETIME
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
-}
-
-entity "complaints" {
-  * id : INT <<PK>>
-  --
-  * ticket_no : VARCHAR(30) <<UNIQUE>>
-  * public_token : VARCHAR(100) <<UNIQUE>>
-  * nama_pelanggan : VARCHAR(100)
-  * nomor_wa : VARCHAR(30)
-  * nomor_wa_clean : VARCHAR(30)
-  * kategori : VARCHAR(50)
-  kategori_lain : VARCHAR(150)
-  keterangan : TEXT
-  struk_file : VARCHAR(255)
-  dokumen_file : VARCHAR(255)
-  * status : VARCHAR(50)
-  assigned_admin_id : INT <<FK>>
-  escalated_to_id : INT <<FK>>
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
-  closed_at : DATETIME
-}
-
-entity "complaint_responses" {
-  * id : INT <<PK>>
-  --
-  * complaint_id : INT <<FK>>
-  user_id : INT <<FK>>
-  * sender_role : VARCHAR(50)
-  * visibility : VARCHAR(50)
-  * message : TEXT
-  attachment_file : VARCHAR(255)
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
-}
-
-entity "status_logs" {
-  * id : INT <<PK>>
-  --
-  * complaint_id : INT <<FK>>
-  old_status : VARCHAR(50)
-  * new_status : VARCHAR(50)
-  changed_by : INT <<FK>>
-  note : TEXT
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
-}
-
-entity "landing_settings" {
-  * id : INT <<PK>>
-  --
-  * setting_key : VARCHAR(100) <<UNIQUE>>
-  setting_value : TEXT
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
-}
-
-users ||--o{ complaints : "assigned_admin_id"
-users ||--o{ complaints : "escalated_to_id"
-users ||--o{ complaint_responses : "user_id"
-users ||--o{ status_logs : "changed_by"
-complaints ||--o{ complaint_responses : "complaint_id"
-complaints ||--o{ status_logs : "complaint_id"
-@enduml
-```
-
-4. Klik **Insert**.
+### Panduan Impor Langsung ke Draw.io
+Untuk memasukkan diagram Notasi Chen di atas ke Draw.io secara instan:
+1. Buka halaman pembuatan diagram baru di [Draw.io](https://app.diagrams.net/).
+2. Pada menu atas, klik **Arrange** > **Insert** > **Advanced** > **Mermaid...** (atau klik ikon **`+`** di toolbar > **Advanced** > **Mermaid...**).
+3. Hapus teks contoh bawaan Draw.io.
+4. Salin seluruh kode blok di atas (mulai dari kata `flowchart TD` sampai akhir) lalu tempel ke dalam kotak input Mermaid.
+5. Klik tombol **Insert**. 
+6. Draw.io akan otomatis menggambar seluruh entitas (persegi panjang), atribut (bulat lonjong/stadion), relasi (belah ketupat), beserta garis hubungan dan teks kardinalitasnya ke lembar kerja Anda. Anda dapat menggeser posisi shape sesuai selera estetika Anda.
 
 ---
 
