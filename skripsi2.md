@@ -191,155 +191,73 @@ flowchart TD
 
 ---
 
-## 3. Entity Relationship Diagram (ERD) - Notasi Chen (Draw.io Ready)
+### 3. Entity Relationship Diagram (ERD) - Notasi Bulat Aliran Hubungan (Draw.io Ready)
 
-Dalam penulisan skripsi akademik, ERD sering kali diwajibkan menggunakan **Notasi Chen** tradisional yang terdiri atas:
-- **Persegi Panjang (Rectangles)** untuk merepresentasikan **Entitas**.
-- **Bulat Lonjong / Elips (Ovals/Stadia)** untuk merepresentasikan **Atribut** (dengan garis bawah `<u>...</u>` untuk Primary Key).
-- **Belah Ketupat / Diamond (Diamonds)** untuk merepresentasikan **Relasi/Hubungan** antarentitas beserta kardinalitasnya (1 ke N).
+Berikut adalah diagram relasi antarentitas yang direpresentasikan menggunakan **notasi bulat/elips** yang saling menyambung menggambarkan aliran aksi dan entitas di dalam sistem (seperti `Pelanggan` -> `mengajukan` -> `Pengaduan` -> `memiliki` -> `Tanggapan`).
 
-### Diagram ERD Notasi Chen
-Berikut adalah visualisasi ERD Chen yang siap dirender secara langsung di Markdown dan dapat Anda impor langsung ke **Draw.io**:
+### Diagram Aliran Relasi (Notasi Bulat)
+Seluruh entitas dan hubungan digambarkan menggunakan bentuk bulat/lonjong yang saling menyambung:
 
 ```mermaid
 flowchart TD
-    %% Entities (Rectangles)
-    U[users]
-    C[complaints]
-    CR[complaint_responses]
-    SL[status_logs]
-    LS[landing_settings]
-
-    style U fill:#fff,stroke:#333,stroke-width:2px
-    style C fill:#fff,stroke:#333,stroke-width:2px
-    style CR fill:#fff,stroke:#333,stroke-width:2px
-    style SL fill:#fff,stroke:#333,stroke-width:2px
-    style LS fill:#fff,stroke:#333,stroke-width:2px
-
-    %% Relationships (Diamonds)
-    R_menangani{menangani}
-    R_menerima{menerima}
-    R_menulis{menulis}
-    R_mengubah{mengubah}
-    R_memiliki_resp{memiliki}
-    R_memiliki_log{memiliki}
-
-    style R_menangani fill:#fff,stroke:#333,stroke-width:2px
-    style R_menerima fill:#fff,stroke:#333,stroke-width:2px
-    style R_menulis fill:#fff,stroke:#333,stroke-width:2px
-    style R_mengubah fill:#fff,stroke:#333,stroke-width:2px
-    style R_memiliki_resp fill:#fff,stroke:#333,stroke-width:2px
-    style R_memiliki_log fill:#fff,stroke:#333,stroke-width:2px
-
-    %% Attributes for users (Ovals)
-    u1(["<u>id</u>"])
-    u2(["nama"])
-    u3(["username"])
-    u4(["password"])
-    u5(["role"])
-    u6(["is_active"])
-    u7(["last_login"])
-
-    U --- u1
-    U --- u2
-    U --- u3
-    U --- u4
-    U --- u5
-    U --- u6
-    U --- u7
-
-    %% Attributes for complaints (Ovals)
-    c1(["<u>id</u>"])
-    c2(["ticket_no"])
-    c3(["public_token"])
-    c4(["nama_pelanggan"])
-    c5(["nomor_wa"])
-    c6(["kategori"])
-    c7(["kategori_lain"])
-    c8(["keterangan"])
-    c9(["struk_file"])
-    c10(["dokumen_file"])
-    c11(["status"])
-    c12(["closed_at"])
-
-    C --- c1
-    C --- c2
-    C --- c3
-    C --- c4
-    C --- c5
-    C --- c6
-    C --- c7
-    C --- c8
-    C --- c9
-    C --- c10
-    C --- c11
-    C --- c12
-
-    %% Attributes for complaint_responses (Ovals)
-    cr1(["<u>id</u>"])
-    cr2(["sender_role"])
-    cr3(["visibility"])
-    cr4(["message"])
-    cr5(["attachment_file"])
-
-    CR --- cr1
-    CR --- cr2
-    CR --- cr3
-    CR --- cr4
-    CR --- cr5
-
-    %% Attributes for status_logs (Ovals)
-    sl1(["<u>id</u>"])
-    sl2(["old_status"])
-    sl3(["new_status"])
-    sl4(["note"])
-
-    SL --- sl1
-    SL --- sl2
-    SL --- sl3
-    SL --- sl4
-
-    %% Attributes for landing_settings (Ovals)
-    ls1(["<u>id</u>"])
-    ls2(["setting_key"])
-    ls3(["setting_value"])
-
-    LS --- ls1
-    LS --- ls2
-    LS --- ls3
-
-    %% Connections with cardinalities (Users & Complaints)
-    U -- "1" --- R_menangani
-    R_menangani --- "N" --> C
+    Pelanggan(["Pelanggan"]) --- mengajukan(["mengajukan"])
+    mengajukan --- Pengaduan(["Pengaduan (Tiket)"])
     
-    U -- "1" --- R_menerima
-    R_menerima --- "N" --> C
+    Pengaduan --- memiliki_tanggapan(["memiliki"])
+    memiliki_tanggapan --- Tanggapan(["Tanggapan (Respons)"])
     
-    %% Users & Responses
-    U -- "1" --- R_menulis
-    R_menulis --- "N" --> CR
+    Pengaduan --- memiliki_log(["memiliki"])
+    memiliki_log --- LogStatus(["Log Status"])
     
-    %% Users & Logs
-    U -- "1" --- R_mengubah
-    R_mengubah --- "N" --> SL
+    Admin(["Admin / Staff"]) --- menangani(["menangani"])
+    menangani --- Pengaduan
     
-    %% Complaints & Responses
-    C -- "1" --- R_memiliki_resp
-    R_memiliki_resp --- "N" --> CR
+    Admin --- menulis(["menulis"])
+    menulis --- Tanggapan
     
-    %% Complaints & Logs
-    C -- "1" --- R_memiliki_log
-    R_memiliki_log --- "N" --> SL
+    Admin --- mengubah(["mengubah"])
+    mengubah --- LogStatus
+    
+    Admin --- melakukan_eskalasi(["melakukan eskalasi"])
+    melakukan_eskalasi --- SuperAdmin(["Super Admin"])
+    
+    SuperAdmin --- memproses(["memproses"])
+    memproses --- Pengaduan
+    
+    SuperAdmin --- mengelola(["mengelola"])
+    mengelola --- Admin
+    
+    SuperAdmin --- mengatur(["mengatur"])
+    mengatur --- LandingSettings(["Landing Settings"])
+
+    %% Styles to make them all white fill and rounded borders
+    style Pelanggan fill:#fff,stroke:#333,stroke-width:2px
+    style mengajukan fill:#fff,stroke:#333,stroke-width:2px
+    style Pengaduan fill:#fff,stroke:#333,stroke-width:2px
+    style memiliki_tanggapan fill:#fff,stroke:#333,stroke-width:2px
+    style Tanggapan fill:#fff,stroke:#333,stroke-width:2px
+    style memiliki_log fill:#fff,stroke:#333,stroke-width:2px
+    style LogStatus fill:#fff,stroke:#333,stroke-width:2px
+    style Admin fill:#fff,stroke:#333,stroke-width:2px
+    style menangani fill:#fff,stroke:#333,stroke-width:2px
+    style menulis fill:#fff,stroke:#333,stroke-width:2px
+    style mengubah fill:#fff,stroke:#333,stroke-width:2px
+    style melakukan_eskalasi fill:#fff,stroke:#333,stroke-width:2px
+    style SuperAdmin fill:#fff,stroke:#333,stroke-width:2px
+    style memproses fill:#fff,stroke:#333,stroke-width:2px
+    style mengelola fill:#fff,stroke:#333,stroke-width:2px
+    style mengatur fill:#fff,stroke:#333,stroke-width:2px
+    style LandingSettings fill:#fff,stroke:#333,stroke-width:2px
 ```
 
 ### Panduan Impor Langsung ke Draw.io
-Untuk memasukkan diagram Notasi Chen di atas ke Draw.io secara instan:
-1. Buka halaman pembuatan diagram baru di [Draw.io](https://app.diagrams.net/).
+Untuk memasukkan diagram dengan bentuk bulat yang saling menyambung di atas ke Draw.io:
+1. Buka halaman baru di [Draw.io](https://app.diagrams.net/).
 2. Pada menu atas, klik **Arrange** > **Insert** > **Advanced** > **Mermaid...** (atau klik ikon **`+`** di toolbar > **Advanced** > **Mermaid...**).
 3. Hapus teks contoh bawaan Draw.io.
 4. Salin seluruh kode blok di atas (mulai dari kata `flowchart TD` sampai akhir) lalu tempel ke dalam kotak input Mermaid.
 5. Klik tombol **Insert**. 
-6. Draw.io akan otomatis menggambar seluruh entitas (persegi panjang), atribut (bulat lonjong/stadion), relasi (belah ketupat), beserta garis hubungan dan teks kardinalitasnya ke lembar kerja Anda. Anda dapat menggeser posisi shape sesuai selera estetika Anda.
+6. Draw.io akan otomatis membuat diagram dengan bentuk bulat lonjong (stadion) yang saling tersambung satu sama lain sesuai dengan alur di atas. Anda dapat merapikan posisinya di lembar kerja sesuai kebutuhan.
 
 ---
 
