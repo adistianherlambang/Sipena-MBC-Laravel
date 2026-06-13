@@ -495,6 +495,7 @@ erDiagram
 ---
 
 ### b. Desain Interface
+Rancangan antarmuka atau desain interface menerjemahkan kebutuhan fungsional sistem ke dalam rancangan grafis halaman publik maupun halaman administrator. Berikut adalah rancangan antarmuka yang ada pada sistem informasi pengaduan pelanggan Sipena pada MBC Swalayan:
 
 #### 1) Rancangan Form Login Admin
 Tampilan form login digunakan untuk memberikan hak akses kepada administrator, yaitu Admin atau Super Admin, untuk masuk ke halaman dashboard internal sistem. Form tersebut dirancang sebagai berikut:
@@ -515,17 +516,17 @@ Tampilan form login digunakan untuk memberikan hak akses kepada administrator, y
 ```
 *Gambar 3.3. Rancangan Form Login Admin.*
 
-##### Tabel 3.1. Rancangan Tombol Form Login Admin
+##### Tabel 14. Rancangan Tombol Form Login Admin
 | No | Tombol | Fungsi |
 | :--- | :--- | :--- |
 | 1 | `MASUK` | Berfungsi untuk mengirimkan kredensial berupa username dan password ke sistem untuk divalidasi. Jika sukses, admin dialihkan ke halaman dashboard. |
 
 ---
 
-#### 2) Rancangan Form Pengaduan (Konsumen)
-Tampilan halaman pengaduan adalah halaman formulir publik ketika konsumen mengakses website sistem pengaduan untuk menulis keluhan. Rancangan ini adalah sebagai berikut:
+#### 2) Rancangan Form Pengaduan Publik
+Tampilan halaman pengaduan adalah halaman formulir utama publik ketika konsumen mengakses website untuk menulis keluhan mereka. Rancangan halaman tersebut adalah sebagai berikut:
 
-##### Halaman Form Pengaduan Konsumen
+##### Halaman Form Pengaduan Publik
 ```
 +-------------------------------------------------------------------+
 |                   FORMULIR PENGADUAN PELANGGAN                    |
@@ -537,9 +538,9 @@ Tampilan halaman pengaduan adalah halaman formulir publik ketika konsumen mengak
 |                                                                   |
 |  Kategori       : [ Pelayanan / Produk / Return / Masalah Lain v] |
 |                                                                   |
-|  Struk Belanja  : [ Pilih File ] (Wajib jika kategori return)     |
+|  Struk Belanja  : [ Pilih File ] Wajib jika kategori return       |
 |                                                                   |
-|  Dokumen Bukti  : [ Pilih File ] (Opsional)                       |
+|  Dokumen Bukti  : [ Pilih File ] Opsional                         |
 |                                                                   |
 |  Keterangan     :                                                 |
 |  +-------------------------------------------------------------+  |
@@ -550,20 +551,52 @@ Tampilan halaman pengaduan adalah halaman formulir publik ketika konsumen mengak
 |                                                                   |
 +-------------------------------------------------------------------+
 ```
-*Gambar 3.4. Rancangan Form Pengaduan Konsumen.*
+*Gambar 3.4. Rancangan Form Pengaduan Publik.*
 
-##### Tabel 3.2. Rancangan Tombol Form Pengaduan Konsumen
+##### Tabel 15. Rancangan Tombol Form Pengaduan Publik
 | No | Tombol | Fungsi |
 | :--- | :--- | :--- |
-| 1 | `Pilih File` | Membuka galeri/penyimpanan perangkat untuk memilih dokumen struk belanja atau dokumen bukti. |
-| 2 | `KIRIM ADUAN`| Mengirimkan data formulir keluhan pelanggan ke database dan membuat nomor tiket otomatis. |
+| 1 | `Pilih File` | Membuka media penyimpanan perangkat untuk mengunggah struk belanja atau dokumen bukti pendukung. |
+| 2 | `KIRIM ADUAN` | Mengirim data keluhan ke database dan membuat tiket serta token pelacakan unik. |
 
 ---
 
-#### 3) Rancangan Halaman Tracking (Konsumen)
-Tampilan halaman tracking digunakan oleh konsumen untuk melacak status aduan dengan nomor tiket mereka. Rancangan ini adalah sebagai berikut:
+#### 3) Rancangan Halaman Tiket Sukses
+Tampilan halaman tiket sukses menampilkan nomor tiket yang berhasil dibuat setelah pengaduan dikirimkan oleh konsumen. Halaman tersebut dirancang sebagai berikut:
 
-##### Halaman Tracking Pengaduan
+##### Halaman Tiket Sukses
+```
++-------------------------------------------------------------------+
+|                       TIKET PENGADUAN                             |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nomor Tiket Anda: SPN-20260612-0001                              |
+|  Simpan nomor tiket ini untuk melacak status keluhan Anda.        |
+|                                                                   |
+|  Nama Pelanggan  : Budi Santoso                                   |
+|  Nomor WhatsApp  : 081234567890                                   |
+|  Kategori        : Return Produk                                  |
+|  Status          : Diajukan                                       |
+|                                                                   |
+|   [ CETAK TIKET ]      [ LACAK ADUAN ]      [ KEMBALI ]           |
+|                                                                   |
++-------------------------------------------------------------------+
+```
+*Gambar 3.5. Rancangan Halaman Tiket Sukses.*
+
+##### Tabel 16. Rancangan Tombol Halaman Tiket Sukses
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `CETAK TIKET` | Membuka jendela cetak atau menyimpan dokumen tiket sebagai PDF. |
+| 2 | `LACAK ADUAN` | Mengarahkan pengguna ke halaman pelacakan status pengaduan terkait. |
+| 3 | `KEMBALI` | Mengarahkan pengguna kembali ke halaman utama atau beranda. |
+
+---
+
+#### 4) Rancangan Halaman Lacak Status (Tracking)
+Tampilan halaman tracking digunakan oleh konsumen untuk melacak status aduan dengan menginput nomor tiket dan nomor WhatsApp mereka. Rancangan halaman tersebut adalah sebagai berikut:
+
+##### Halaman Lacak Status
 ```
 +-------------------------------------------------------------------+
 |                     CEK STATUS PENGADUAN                          |
@@ -575,11 +608,210 @@ Tampilan halaman tracking digunakan oleh konsumen untuk melacak status aduan den
 |                                                                   |
 |                       [ LACAK STATUS ]                            |
 |                                                                   |
+|  ---------------------------------------------------------------  |
+|  Status         : Diproses                                        |
+|  Ditangani Oleh : Admin Andi                                      |
+|  Tindak Lanjut  :                                                 |
+|  - Tanggapan Andi (12/06/2026): Mohon tunggu kami sedang cek ...  |
+|                                                                   |
 +-------------------------------------------------------------------+
 ```
-*Gambar 3.5. Rancangan Halaman Tracking.*
+*Gambar 3.6. Rancangan Halaman Lacak Status.*
 
-##### Tabel 3.3. Rancangan Tombol Halaman Tracking
+##### Tabel 17. Rancangan Tombol Halaman Lacak Status
 | No | Tombol | Fungsi |
 | :--- | :--- | :--- |
-| 1 | `LACAK STATUS` | Melakukan pencarian tiket pengaduan di database. Jika ditemukan, menampilkan halaman riwayat detail dan progress keluhan. |
+| 1 | `LACAK STATUS` | Mengirim data nomor tiket dan nomor WhatsApp untuk dicari di dalam database pengaduan. |
+
+---
+
+#### 5) Rancangan Halaman Dashboard Utama Admin
+Tampilan halaman dashboard utama menyajikan data statistik keluhan pelanggan untuk membantu mempermudah pengawasan secara real-time. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Dashboard Utama Admin
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Selamat datang, Admin Andi                                       |
+|                                                                   |
+|  +--------------+ +--------------+ +--------------+ +----------+  |
+|  |  Total: 25   | | Diajukan: 5  | | Diproses: 15 | | Selesai:5|  |
+|  +--------------+ +--------------+ +--------------+ +----------+  |
+|                                                                   |
+|  Daftar Pengaduan Terbaru                                         |
+|  +-------------------------------------------------------------+  |
+|  | Tiket             | Pelanggan      | Kategori    | Aksi     |  |
+|  |-------------------|----------------|-------------|----------|  |
+|  | SPN-20260612-0001 | Budi Santoso   | Pelayanan   | [Detail] |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 3.7. Rancangan Halaman Dashboard Utama Admin.*
+
+##### Tabel 18. Rancangan Tombol Halaman Dashboard Utama Admin
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `Pengaduan` | Mengarahkan admin ke halaman daftar pengaduan lengkap. |
+| 2 | `Laporan` | Mengarahkan admin ke halaman laporan rekapitulasi data. |
+| 3 | `Pengaturan` | Hanya aktif untuk Super Admin, mengarahkan ke menu user dan landing page. |
+| 4 | `Detail` | Mengarahkan admin ke halaman rincian penanganan tiket tertentu. |
+
+---
+
+#### 6) Rancangan Halaman Daftar Pengaduan
+Tampilan halaman daftar pengaduan menampilkan semua tiket keluhan masuk dengan fitur filter data dan pencarian terpadu. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Daftar Pengaduan
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Daftar Pengaduan                                                 |
+|                                                                   |
+|  Cari: [________]  Status: [ Semua v ]  Kategori: [ Semua v ]     |
+|  [ FILTER ]                                                       |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | Tiket      | Pelanggan    | Kategori | Status    | Aksi     |  |
+|  |------------|--------------|----------|-----------|----------|  |
+|  | SPN-0001   | Budi         | Produk   | Diajukan  | [Detail] |  |
+|  +-------------------------------------------------------------+  |
+|                           [ Prev ] 1 2 3 [ Next ]                 |
++-------------------------------------------------------------------+
+```
+*Gambar 3.8. Rancangan Halaman Daftar Pengaduan.*
+
+##### Tabel 19. Rancangan Tombol Halaman Daftar Pengaduan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `FILTER` | Memproses pencarian data pengaduan sesuai filter kata kunci, status, dan kategori. |
+| 2 | `Detail` | Membuka lembar kerja tindakan penanganan keluhan terpilih. |
+| 3 | `Prev / Next` | Berfungsi untuk perpindahan halaman data tabel (pagination). |
+
+---
+
+#### 7) Rancangan Halaman Detail & Tindakan Pengaduan
+Tampilan halaman detail digunakan oleh admin untuk memperbarui status progres keluhan, menulis catatan internal, atau membalas respon keluhan. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Detail & Tindakan Pengaduan
+```
++-------------------------------------------------------------------+
+|  SIPENA | Detail Tiket: SPN-20260612-0001                         |
++-------------------------------------------------------------------+
+|  Data Pelanggan:                                                  |
+|  Nama: Budi Santoso | WA: 081234567890 | Status: Diproses         |
+|  Keterangan: Barang rusak saat dibeli                             |
+|  ---------------------------------------------------------------  |
+|  Form Tindakan Admin:                                             |
+|  Status Baru: [ Selesai / Ditolak / Diproses v ]                  |
+|  Catatan Status: [_____________________________________________]  |
+|                       [ UPDATE STATUS ]                           |
+|                                                                   |
+|  Tulis Tanggapan Balasan:                                         |
+|  Pesan: [______________________________________________________]  |
+|  Visibilitas: (x) Publik  ( ) Internal                            |
+|                       [ KIRIM TANGGAPAN ]                         |
+|                                                                   |
+|                       [ ESKALASI TIKET ]                          |
++-------------------------------------------------------------------+
+```
+*Gambar 3.9. Rancangan Halaman Detail & Tindakan Pengaduan.*
+
+##### Tabel 20. Rancangan Tombol Halaman Detail & Tindakan Pengaduan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `UPDATE STATUS` | Mengubah status progres tiket dan mencatatnya ke dalam log riwayat status. |
+| 2 | `KIRIM TANGGAPAN`| Menyimpan tanggapan publik untuk dibaca konsumen atau catatan internal rahasia staff. |
+| 3 | `ESKALASI TIKET` | Mengalihkan penanganan tiket ke Kepala Shift jika admin staff tidak dapat menyelesaikannya. |
+
+---
+
+#### 8) Rancangan Halaman Laporan & Rekapitulasi
+Tampilan halaman laporan memfasilitasi filter bulanan atau tahunan serta pengunduhan data rekap laporan. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Laporan & Rekapitulasi
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Laporan Rekap Pengaduan                                          |
+|                                                                   |
+|  Bulan: [ Semua v ]  Tahun: [ 2026 ]  Status: [ Semua v ]         |
+|  [ FILTER ]                                                       |
+|                                                                   |
+|  [ DOWNLOAD EXCEL/CSV ]    [ DOWNLOAD WORD ]    [ CETAK PDF ]     |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | No | Tiket    | Pelanggan | Masalah | Status   | Tgl Selesai |  |
+|  |----|----------|-----------|---------|----------|-------------|  |
+|  | 1  | SPN-0001 | Budi      | Produk  | Selesai  | 12/06/2026  |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 3.10. Rancangan Halaman Laporan & Rekapitulasi.*
+
+##### Tabel 21. Rancangan Tombol Halaman Laporan & Rekapitulasi
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `FILTER` | Menyaring data laporan berdasarkan periode bulan, tahun, dan status. |
+| 2 | `DOWNLOAD EXCEL/CSV` | Mengunduh berkas laporan dalam format file spreadsheet (.csv). |
+| 3 | `DOWNLOAD WORD` | Mengunduh dokumen laporan dalam format (.doc) untuk Microsoft Word. |
+| 4 | `CETAK PDF` | Membuka halaman ramah cetak untuk print langsung atau ekspor ke PDF. |
+
+---
+
+#### 9) Rancangan Halaman Kelola Karyawan (Super Admin)
+Tampilan halaman kelola karyawan menampilkan daftar admin staff dan memfasilitasi pengelolaan user. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Kelola Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Pengaturan User Akun Karyawan                                    |
+|                                                                   |
+|  [ + TAMBAH USER BARU ]                                           |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | Nama       | Username  | Role        | Status   | Aksi      |  |
+|  |------------|-----------|-------------|----------|-----------|  |
+|  | Admin Andi | andi123   | Admin Staff | Aktif    | [Edit]    |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 3.11. Rancangan Halaman Kelola Karyawan.*
+
+##### Tabel 22. Rancangan Tombol Halaman Kelola Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `+ TAMBAH USER BARU` | Membuka form input untuk mendaftarkan akun admin baru ke database. |
+| 2 | `Edit` | Membuka form edit informasi akun karyawan terpilih. |
+
+---
+
+#### 10) Rancangan Halaman Pengaturan Halaman Utama (Super Admin)
+Tampilan halaman pengaturan landing page memfasilitasi konfigurasi konten dinamis pada halaman publik. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Pengaturan Halaman Utama
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Pengaturan Tampilan Landing Page                                 |
+|                                                                   |
+|  Judul Hero     : [____________________________________________]  |
+|  Deskripsi Hero : [____________________________________________]  |
+|  Running Text   : [____________________________________________]  |
+|  URL YouTube    : [____________________________________________]  |
+|  Kontak/Layanan : [____________________________________________]  |
+|                                                                   |
+|                       [ SIMPAN CONFIG ]                           |
++-------------------------------------------------------------------+
+```
+*Gambar 3.12. Rancangan Halaman Pengaturan Halaman Utama.*
+
+##### Tabel 23. Rancangan Tombol Halaman Pengaturan Halaman Utama
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN CONFIG` | Menyimpan perubahan konfigurasi konten landing page ke dalam database `landing_settings`. |
