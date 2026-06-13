@@ -1280,46 +1280,6 @@ Keterangan:
 - **Berhasil**: Jika program yang diuji berjalan dan sesuai harapan.
 - **Error**: Jika program yang diuji tidak berjalan atau masih terdapat kesalahan.
 
-Berikut adalah flowchart alur pengujian sistem menggunakan metode Black Box Testing:
-
-```mermaid
-%%{init: {"flowchart": {"curve": "linear"}}}%%
-flowchart TD
-    Start([Mulai]) --> Prep[Identifikasi Fitur & Skenario Pengujian]
-    Prep --> InputData[/Tentukan Data Uji & Test Case/]
-    InputData --> RunTest[Jalankan Pengujian pada Antarmuka Sistem]
-    RunTest --> Decision{Hasil Sesuai Harapan?}
-    
-    Decision -->|Tidak| ErrLog[Catat sebagai Status Error]
-    ErrLog --> FixCode[Perbaikan Kode Program]
-    FixCode --> RunTest
-    
-    Decision -->|Ya| SuccessLog[Catat sebagai Status Berhasil]
-    SuccessLog --> CheckAll{Semua Test Case Selesai?}
-    
-    CheckAll -->|Tidak| NextCase[Ambil Test Case Selanjutnya]
-    NextCase --> RunTest
-    
-    CheckAll -->|Ya| Summary[Buat Rekapitulasi & Laporan Hasil Testing]
-    Summary --> End([Selesai])
-
-    %% Styles (Monochrome / B&W for academic paper)
-    classDef default fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
-    classDef terminal fill:#fff,stroke:#000,stroke-width:2px,color:#000;
-    classDef decision fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
-    classDef process fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
-    classDef data fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
-
-    class Start,End terminal;
-    class Decision,CheckAll decision;
-    class Prep,RunTest,ErrLog,FixCode,SuccessLog,NextCase,Summary process;
-    class InputData data;
-    linkStyle default stroke:#000,stroke-width:1.5px;
-```
-*Gambar 5.1. Flowchart Alur Pengujian Black Box.*
-
-
-
 ### a. Testing Form Login Admin
 Testing pertama dilakukan pada form login admin. Di bawah ini adalah Tabel 38. Testing form login.
 
@@ -1453,4 +1413,65 @@ Testing kedua belas dilakukan pada form pengubahan data akun karyawan. Di bawah 
 | 1 | Memperbarui nama karyawan dan mengubah status keaktifan menjadi nonaktif. | Nama = "Andi Update", is_active = 0, klik SIMPAN | Sistem sukses memperbarui database users dan menonaktifkan akun karyawan tersebut. | Sesuai harapan | Berhasil |
 
 ---
+
+## 6. Flowchart Alur Pengguna
+Berikut adalah representasi alur sistem pengaduan pelanggan Sipena yang disajikan dalam bentuk tabel perbandingan aktivitas antara pelanggan atau user, karyawan atau admin, dan kepala shift atau superadmin, diikuti dengan diagram alur atau flowchart dengan relasi garis lurus:
+
+##### Tabel 50. Alur Aktivitas Pengguna Lintas Peran
+| Pelanggan atau User | Karyawan atau Admin | Kepala Shift atau Superadmin |
+| :--- | :--- | :--- |
+| **Mulai**: Mengakses website Sipena. | **Mulai**: Mengakses login. | **Mulai**: Mengakses login. |
+| **Isi Form**: Mengisi formulir keluhan seperti nama, no WA, dan kategori. | **Autentikasi**: Memasukkan username dan password. | **Autentikasi**: Memasukkan username dan password. |
+| **Upload Struk**: Unggah struk belanja jika kategori return produk. | **Dashboard**: Masuk dashboard dan melihat list keluhan. | **Dashboard**: Masuk dashboard utama superadmin. |
+| **Submit**: Kirim data keluhan ke database. | **Detail**: Membuka detail aduan dan kelola status. | **Eskalasi**: Menerima eskalasi tiket yang diteruskan. |
+| **Cetak Tiket**: Simpan nomor tiket dan token lacak. | **Catatan**: Memberi tanggapan internal atau publik. | **Kebijakan**: Mengambil keputusan akhir keluhan. |
+| **Lacak Status**: Memantau perkembangan keluhan secara online. | **Eskalasi**: Meneruskan keluhan rumit ke kepala shift. | **Kelola User**: Manajemen data akun staff. |
+| **Selesai**: Menerima solusi keluhan. | **Selesai**: Proses kelola keluhan selesai. | **Landing Page**: Mengatur teks atau video landing page. |
+
+##### Flowchart Hubungan Proses Sipena
+```mermaid
+%%{init: {'flowchart': {'curve': 'linear'}}}%%
+flowchart LR
+    subgraph Pelanggan ["Pelanggan atau User"]
+        direction TB
+        StartUser([Mulai]) --> FormAdon[/"Mengisi Form Pengaduan"/]
+        FormAdon --> CekReturn{"Kategori Return?"}
+        CekReturn -- Ya --> UploadStruk[/"Upload Struk Belanja"/]
+        CekReturn -- Tidak --> KirimAdon["Kirim Pengaduan"]
+        UploadStruk --> KirimAdon
+        KirimAdon --> SimpanDb[(Database complaints)]
+        SimpanDb --> GetTicket[/"Menerima Nomor Tiket"/]
+        GetTicket --> LacakAdon[/"Lacak Status Tiket"/]
+        LacakAdon --> EndUser([Selesai])
+    end
+
+    subgraph Admin ["Karyawan atau Admin"]
+        direction TB
+        StartAdmin([Mulai]) --> LoginAdmin[/"Login Admin"/]
+        LoginAdmin --> CekAuth{"Kredensial Valid?"}
+        CekAuth -- Ya --> DashAdmin["Buka Dashboard & Detail Pengaduan"]
+        CekAuth -- Tidak --> LoginAdmin
+        DashAdmin --> CekEskalasi{"Perlu Eskalasi?"}
+        CekEskalasi -- Ya --> EskalasiSuper["Teruskan ke Kepala Shift"]
+        CekEskalasi -- Tidak --> TulisRespon["Update Status & Tulis Balasan"]
+        TulisRespon --> EndAdmin([Selesai])
+    end
+
+    subgraph Superadmin ["Kepala Shift atau Superadmin"]
+        direction TB
+        StartSuper([Mulai]) --> LoginSuper[/"Login Super Admin"/]
+        LoginSuper --> CekAuthSuper{"Kredensial Valid?"}
+        CekAuthSuper -- Ya --> DashSuper["Buka Dashboard & Tiket Eskalasi"]
+        CekAuthSuper -- Tidak --> LoginSuper
+        DashSuper --> KeputusanSuper["Ambil Keputusan Akhir & Hapus/Selesaikan"]
+        KeputusanSuper --> EndSuper([Selesai])
+    end
+
+    %% Hubungan alur data lintas peran
+    SimpanDb -.-> DashAdmin
+    EskalasiSuper -.-> DashSuper
+    TulisRespon -.-> SimpanDb
+    KeputusanSuper -.-> SimpanDb
+```
+
 
