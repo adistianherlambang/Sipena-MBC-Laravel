@@ -335,6 +335,8 @@ Jumlah field	: 9
 | `created_at` | timestamp | YES | | NULL | |
 | `updated_at` | timestamp | YES | | NULL | |
 
+Tabel 9. Rancangan basis data tabel login
+
 ##### (2) Tabel `complaints`
 Tabel `complaints` diperlukan untuk merekam seluruh rincian keluhan masuk yang diajukan oleh konsumen.
 
@@ -363,6 +365,8 @@ Jumlah field	: 17
 | `updated_at` | timestamp | YES | | NULL | |
 | `closed_at` | datetime | YES | | NULL | |
 
+Tabel 10. Rancangan basis data tabel pengaduan
+
 ##### (3) Tabel `complaint_responses`
 Tabel `complaint_responses` diperlukan untuk mendata percakapan dan respon balasan dari staff admin maupun sistem.
 
@@ -383,6 +387,8 @@ Jumlah field	: 9
 | `created_at` | timestamp | YES | | NULL | |
 | `updated_at` | timestamp | YES | | NULL | |
 
+Tabel 11. Rancangan basis data tabel tanggapan pengaduan
+
 ##### (4) Tabel `status_logs`
 Tabel `status_logs` diperlukan untuk mencatat riwayat perubahan status pelaporan keluhan secara berurutan.
 
@@ -402,6 +408,8 @@ Jumlah field	: 8
 | `created_at` | timestamp | YES | | NULL | |
 | `updated_at` | timestamp | YES | | NULL | |
 
+Tabel 12. Rancangan basis data tabel log status
+
 ##### (5) Tabel `landing_settings`
 Tabel `landing_settings` diperlukan untuk menampung pengaturan data antarmuka halaman beranda secara dinamis.
 
@@ -417,6 +425,8 @@ Jumlah field	: 5
 | `setting_value` | text | YES | | NULL | |
 | `created_at` | timestamp | YES | | NULL | |
 | `updated_at` | timestamp | YES | | NULL | |
+
+Tabel 13. Rancangan basis data tabel pengaturan landing page
 
 ---
 
