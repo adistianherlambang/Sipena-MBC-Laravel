@@ -318,6 +318,11 @@ Tabel database atau basis data adalah kumpulan file yang berkaitan dengan progra
 ##### (1) Tabel `users`
 Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfungsi untuk memproses otentikasi login serta identifikasi hak akses level pengguna, baik Admin maupun Super Admin.
 
+Nama Tabel	: users
+Attribute   	: id, nama, username, password, role, is_active, last_login, created_at, updated_at
+Primary key 	: id
+Jumlah field	: 9
+
 | Field | Type | Null | Key | Default | Extra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
@@ -332,6 +337,11 @@ Tabel `users` diperlukan untuk mendaftarkan akun administrator sistem dan berfun
 
 ##### (2) Tabel `complaints`
 Tabel `complaints` diperlukan untuk merekam seluruh rincian keluhan masuk yang diajukan oleh konsumen.
+
+Nama Tabel	: complaints
+Attribute   	: id, ticket_no, public_token, nama_pelanggan, nomor_wa, nomor_wa_clean, kategori, kategori_lain, keterangan, struk_file, dokumen_file, status, assigned_admin_id, escalated_to_id, created_at, updated_at, closed_at
+Primary key 	: id
+Jumlah field	: 17
 
 | Field | Type | Null | Key | Default | Extra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -356,6 +366,11 @@ Tabel `complaints` diperlukan untuk merekam seluruh rincian keluhan masuk yang d
 ##### (3) Tabel `complaint_responses`
 Tabel `complaint_responses` diperlukan untuk mendata percakapan dan respon balasan dari staff admin maupun sistem.
 
+Nama Tabel	: complaint_responses
+Attribute   	: id, complaint_id, user_id, sender_role, visibility, message, attachment_file, created_at, updated_at
+Primary key 	: id
+Jumlah field	: 9
+
 | Field | Type | Null | Key | Default | Extra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
@@ -371,6 +386,11 @@ Tabel `complaint_responses` diperlukan untuk mendata percakapan dan respon balas
 ##### (4) Tabel `status_logs`
 Tabel `status_logs` diperlukan untuk mencatat riwayat perubahan status pelaporan keluhan secara berurutan.
 
+Nama Tabel	: status_logs
+Attribute   	: id, complaint_id, old_status, new_status, changed_by, note, created_at, updated_at
+Primary key 	: id
+Jumlah field	: 8
+
 | Field | Type | Null | Key | Default | Extra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `id` | bigint unsigned | NO | PRI | NULL | auto_increment |
@@ -384,6 +404,11 @@ Tabel `status_logs` diperlukan untuk mencatat riwayat perubahan status pelaporan
 
 ##### (5) Tabel `landing_settings`
 Tabel `landing_settings` diperlukan untuk menampung pengaturan data antarmuka halaman beranda secara dinamis.
+
+Nama Tabel	: landing_settings
+Attribute   	: id, setting_key, setting_value, created_at, updated_at
+Primary key 	: id
+Jumlah field	: 5
 
 | Field | Type | Null | Key | Default | Extra |
 | :--- | :--- | :--- | :--- | :--- | :--- |
