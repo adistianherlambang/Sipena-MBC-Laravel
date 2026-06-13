@@ -1,4 +1,4 @@
-# Dokumentasi Perancangan Sistem Pengaduan Pelanggan (Sipena) MBC Swalayan
+# Dokumentasi Perancangan Sistem Pengaduan Pelanggan Sipena MBC Swalayan
 
 Berikut adalah perancangan sistem yang diusulkan oleh penulis sebagai acuan sebelum proses pembuatan kode program dilakukan.
 
@@ -54,7 +54,7 @@ graph TD
     style Sipena fill:#fff,stroke:#000,stroke-width:1px
 ```
 
-*Gambar 2.1. Use Case Diagram Sistem Informasi Pengaduan Pelanggan (Sipena) Pada MBC Swalayan.*
+*Gambar 2.1. Use Case Diagram Sistem Informasi Pengaduan Pelanggan Sipena Pada MBC Swalayan.*
 
 ---
 
@@ -98,11 +98,11 @@ flowchart TD
 
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
 ```
-*Gambar 2.2. Activity Diagram Admin Sistem Informasi Pengaduan Pelanggan (Sipena).*
+*Gambar 2.2. Activity Diagram Admin Sistem Informasi Pengaduan Pelanggan Sipena.*
 
 ---
 
-#### (2) Activity Diagram Konsumen (Pelanggan)
+#### (2) Activity Diagram Konsumen atau Pelanggan
 Pada Gambar 2.3 berikut merupakan activity diagram pada konsumen dalam menerima informasi, melacak status pengaduan, dan mengirimkan keluhan pada sistem informasi pengaduan pelanggan MBC Swalayan.
 
 ```mermaid
@@ -132,7 +132,7 @@ flowchart TD
 
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
 ```
-*Gambar 2.3. Activity Diagram Konsumen Sistem Informasi Pengaduan Pelanggan (Sipena).*
+*Gambar 2.3. Activity Diagram Konsumen Sistem Informasi Pengaduan Pelanggan Sipena.*
 
 ---
 
@@ -177,7 +177,7 @@ flowchart TD
 
     classDef default fill:#fff,stroke:#000,stroke-width:1px,color:#000;
 ```
-*Gambar 2.4. Activity Diagram Super Admin Sistem Informasi Pengaduan Pelanggan (Sipena).*
+*Gambar 2.4. Activity Diagram Super Admin Sistem Informasi Pengaduan Pelanggan Sipena.*
 
 ---
 
@@ -308,7 +308,7 @@ flowchart TD
     class R1,R2,R3,R4,R5,R6 relationship;
     linkStyle default stroke:#000,stroke-width:1.5px;
 ```
-*Gambar 3.1. Entity Relationship Diagram (ERD) Sipena MBC Swalayan.*
+*Gambar 3.1. Entity Relationship Diagram ERD Sipena MBC Swalayan.*
 
 ---
 
@@ -593,7 +593,7 @@ Tampilan halaman tiket sukses menampilkan nomor tiket yang berhasil dibuat setel
 
 ---
 
-#### 4) Rancangan Halaman Lacak Status (Tracking)
+#### 4) Rancangan Halaman Lacak Status atau Tracking
 Tampilan halaman tracking digunakan oleh konsumen untuk melacak status aduan dengan menginput nomor tiket dan nomor WhatsApp mereka. Rancangan halaman tersebut adalah sebagai berikut:
 
 ##### Halaman Lacak Status
@@ -761,7 +761,7 @@ Tampilan halaman laporan memfasilitasi filter bulanan atau tahunan serta pengund
 
 ---
 
-#### 9) Rancangan Halaman Kelola Karyawan (Super Admin)
+#### 9) Rancangan Halaman Kelola Karyawan khusus Super Admin
 Tampilan halaman kelola karyawan menampilkan daftar admin staff dan memfasilitasi pengelolaan user. Halaman tersebut dirancang sebagai berikut:
 
 ##### Halaman Kelola Karyawan
@@ -790,7 +790,7 @@ Tampilan halaman kelola karyawan menampilkan daftar admin staff dan memfasilitas
 
 ---
 
-#### 10) Rancangan Halaman Pengaturan Halaman Utama (Super Admin)
+#### 10) Rancangan Halaman Pengaturan Halaman Utama khusus Super Admin
 Tampilan halaman pengaturan landing page memfasilitasi konfigurasi konten dinamis pada halaman publik. Halaman tersebut dirancang sebagai berikut:
 
 ##### Halaman Pengaturan Halaman Utama
@@ -815,3 +815,461 @@ Tampilan halaman pengaturan landing page memfasilitasi konfigurasi konten dinami
 | No | Tombol | Fungsi |
 | :--- | :--- | :--- |
 | 1 | `SIMPAN CONFIG` | Menyimpan perubahan konfigurasi konten landing page ke dalam database `landing_settings`. |
+
+---
+
+#### 11) Rancangan Halaman Tambah Karyawan khusus Super Admin
+Tampilan halaman tambah karyawan digunakan oleh Super Admin untuk mendaftarkan akun baru ke dalam sistem. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Tambah Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Tambah User Akun Karyawan                                        |
+|                                                                   |
+|  Nama     : [__________________________________________________]  |
+|                                                                   |
+|  Username : [__________________________________________________]  |
+|                                                                   |
+|  Password : [__________________________________________________]  |
+|                                                                   |
+|  Role     : [ Admin / Karyawan | Super Admin / Kepala Shift  v ]  |
+|                                                                   |
+|  [x] Aktif                                                        |
+|                                                                   |
+|                     [ SIMPAN ]       [ BATAL ]                    |
++-------------------------------------------------------------------+
+```
+*Gambar 3.13. Rancangan Halaman Tambah Karyawan.*
+
+##### Tabel 24. Rancangan Tombol Halaman Tambah Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN` | Berfungsi untuk menyimpan data akun baru yang telah diinput ke dalam database users. |
+| 2 | `BATAL` | Berfungsi untuk membatalkan proses pendaftaran dan mengarahkan kembali ke halaman daftar karyawan. |
+
+---
+
+#### 12) Rancangan Halaman Edit Karyawan khusus Super Admin
+Tampilan halaman edit karyawan digunakan oleh Super Admin untuk memperbarui informasi data akun karyawan yang sudah terdaftar. Halaman tersebut dirancang sebagai berikut:
+
+##### Halaman Edit Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Ubah User Akun Karyawan                                          |
+|                                                                   |
+|  Nama     : [ Admin Andi ______________________________________]  |
+|                                                                   |
+|  Username : [ andi123 _________________________________________]  |
+|                                                                   |
+|  Password Baru : [_____________________________________________]  |
+|  * Kosongkan jika tidak ingin mengganti password                  |
+|                                                                   |
+|  Role     : [ Admin / Karyawan | Super Admin / Kepala Shift  v ]  |
+|                                                                   |
+|  [x] Aktif                                                        |
+|                                                                   |
+|                     [ SIMPAN ]       [ BATAL ]                    |
++-------------------------------------------------------------------+
+```
+*Gambar 3.14. Rancangan Halaman Edit Karyawan.*
+
+##### Tabel 25. Rancangan Tombol Halaman Edit Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN` | Berfungsi untuk menyimpan seluruh perubahan data akun ke database users. |
+| 2 | `BATAL` | Berfungsi untuk membatalkan proses pengeditan dan mengarahkan kembali ke halaman daftar karyawan. |
+
+---
+
+## 4. Implementasi
+Tahap implementasi merupakan tahap di mana rancangan sistem yang telah dibuat diterapkan ke dalam bentuk kode program menggunakan bahasa pemrograman PHP dengan framework Laravel. Berikut merupakan tampilan dari implementasi antarmuka sistem pengaduan pelanggan Sipena pada MBC Swalayan:
+
+### 1) Halaman Form Login
+Halaman form login digunakan untuk login admin website. Berikut adalah Gambar 14. Halaman Form login.
+
+##### Tampilan Halaman Form Login Admin
+```
++-------------------------------------------------------------------+
+|                            LOGIN ADMIN                            |
++-------------------------------------------------------------------+
+|                                                                   |
+|   Username : [_________________________________________________]  |
+|                                                                   |
+|   Password : [_________________________________________________]  |
+|                                                                   |
+|                       [ MASUK ]                                   |
+|                                                                   |
++-------------------------------------------------------------------+
+```
+*Gambar 14. Halaman Form login.*
+
+##### Tabel 26. Halaman Form Login
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `MASUK` | Berfungsi untuk memproses kredensial masuk admin ke sistem agar dapat mengakses dashboard utama. |
+
+---
+
+### 2) Halaman Form Pengaduan Publik
+Halaman form pengaduan digunakan oleh pelanggan untuk mengajukan keluhan secara online. Berikut adalah Gambar 15. Halaman Form pengaduan.
+
+##### Tampilan Halaman Form Pengaduan Publik
+```
++-------------------------------------------------------------------+
+|                   FORMULIR PENGADUAN PELANGGAN                    |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nama Pelanggan : [____________________________________________]  |
+|                                                                   |
+|  Nomor WhatsApp : [____________________________________________]  |
+|                                                                   |
+|  Kategori       : [ Pelayanan / Produk / Return / Masalah Lain v] |
+|                                                                   |
+|  Struk Belanja  : [ Pilih File ] Wajib jika kategori return       |
+|                                                                   |
+|  Dokumen Bukti  : [ Pilih File ] Opsional                         |
+|                                                                   |
+|  Keterangan     :                                                 |
+|  +-------------------------------------------------------------+  |
+|  | Tulis isi keluhan Anda di sini...                           |  |
+|  +-------------------------------------------------------------+  |
+|                                                                   |
+|                       [ KIRIM ADUAN ]                             |
+|                                                                   |
++-------------------------------------------------------------------+
+```
+*Gambar 15. Halaman Form pengaduan.*
+
+##### Tabel 27. Halaman Form Pengaduan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `Pilih File` | Mengunggah dokumen bukti atau struk dari media penyimpanan. |
+| 2 | `KIRIM ADUAN` | Memproses penyimpanan data pengaduan ke database. |
+
+---
+
+### 3) Halaman Tiket Sukses
+Halaman tiket sukses menampilkan nomor tiket unik yang dihasilkan secara otomatis setelah pengaduan disimpan. Berikut adalah Gambar 16. Halaman Tiket sukses.
+
+##### Tampilan Halaman Tiket Sukses
+```
++-------------------------------------------------------------------+
+|                       TIKET PENGADUAN                             |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nomor Tiket Anda: SPN-20260612-0001                              |
+|  Simpan nomor tiket ini untuk melacak status keluhan Anda.        |
+|                                                                   |
+|  Nama Pelanggan  : Budi Santoso                                   |
+|  Nomor WhatsApp  : 081234567890                                   |
+|  Kategori        : Return Produk                                  |
+|  Status          : Diajukan                                       |
+|                                                                   |
+|   [ CETAK TIKET ]      [ LACAK ADUAN ]      [ KEMBALI ]           |
+|                                                                   |
++-------------------------------------------------------------------+
+```
+*Gambar 16. Halaman Tiket sukses.*
+
+##### Tabel 28. Halaman Tiket Sukses
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `CETAK TIKET` | Mencetak dokumen tiket fisik atau menyimpan sebagai berkas digital PDF. |
+| 2 | `LACAK ADUAN` | Membuka rincian progres tindak lanjut dari keluhan. |
+| 3 | `KEMBALI` | Kembali ke halaman beranda pengaduan pelanggan. |
+
+---
+
+### 4) Halaman Lacak Status atau Tracking
+Halaman lacak status memfasilitasi pelacakan keluhan serta menampilkan riwayat balasan admin. Berikut adalah Gambar 17. Halaman Lacak status.
+
+##### Tampilan Halaman Lacak Status
+```
++-------------------------------------------------------------------+
+|                     CEK STATUS PENGADUAN                          |
++-------------------------------------------------------------------+
+|                                                                   |
+|  Nomor Tiket    : [ Contoh: SPN-20260612-0001 _________________]  |
+|                                                                   |
+|  Nomor WhatsApp : [ Contoh: 081234567890 ______________________]  |
+|                                                                   |
+|                       [ LACAK STATUS ]                            |
+|                                                                   |
+|  ---------------------------------------------------------------  |
+|  Status         : Diproses                                        |
+|  Ditangani Oleh : Admin Andi                                      |
+|  Tindak Lanjut  :                                                 |
+|  - Tanggapan Andi (12/06/2026): Mohon tunggu kami sedang cek ...  |
+|                                                                   |
++-------------------------------------------------------------------+
+```
+*Gambar 17. Halaman Lacak status.*
+
+##### Tabel 29. Halaman Lacak Status
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `LACAK STATUS` | Menjalankan pencarian kecocokan data tiket di database. |
+
+---
+
+### 5) Halaman Dashboard Utama Admin
+Halaman dashboard utama menampilkan statistik ringkasan dan daftar pengaduan terbaru untuk staff admin. Berikut adalah Gambar 18. Halaman Dashboard utama admin.
+
+##### Tampilan Halaman Dashboard Utama Admin
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Selamat datang, Admin Andi                                       |
+|                                                                   |
+|  +--------------+ +--------------+ +--------------+ +----------+  |
+|  |  Total: 25   | | Diajukan: 5  | | Diproses: 15 | | Selesai:5|  |
+|  +--------------+ +--------------+ +--------------+ +----------+  |
+|                                                                   |
+|  Daftar Pengaduan Terbaru                                         |
+|  +-------------------------------------------------------------+  |
+|  | Tiket             | Pelanggan      | Kategori    | Aksi     |  |
+|  |-------------------|----------------|-------------|----------|  |
+|  | SPN-20260612-0001 | Budi Santoso   | Pelayanan   | [Detail] |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 18. Halaman Dashboard utama admin.*
+
+##### Tabel 30. Halaman Dashboard Utama Admin
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `Pengaduan` | Membuka daftar keluhan lengkap. |
+| 2 | `Laporan` | Membuka laporan dan ekspor rekapitulasi data. |
+| 3 | `Detail` | Membuka halaman lembar kerja tindakan keluhan. |
+
+---
+
+### 6) Halaman Daftar Pengaduan
+Halaman daftar pengaduan memfasilitasi filter pencarian keluhan pelanggan secara dinamis. Berikut adalah Gambar 19. Halaman Daftar pengaduan.
+
+##### Tampilan Halaman Daftar Pengaduan
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Daftar Pengaduan                                                 |
+|                                                                   |
+|  Cari: [________]  Status: [ Semua v ]  Kategori: [ Semua v ]     |
+|  [ FILTER ]                                                       |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | Tiket      | Pelanggan    | Kategori | Status    | Aksi     |  |
+|  |------------|--------------|----------|-----------|----------|  |
+|  | SPN-0001   | Budi         | Produk   | Diajukan  | [Detail] |  |
+|  +-------------------------------------------------------------+  |
+|                           [ Prev ] 1 2 3 [ Next ]                 |
++-------------------------------------------------------------------+
+```
+*Gambar 19. Halaman Daftar pengaduan.*
+
+##### Tabel 31. Halaman Daftar Pengaduan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `FILTER` | Memproses pemfilteran data aduan. |
+| 2 | `Detail` | Mengakses detail progres keluhan. |
+
+---
+
+### 7) Halaman Detail & Tindakan Pengaduan
+Halaman detail dan tindakan pengaduan memfasilitasi admin staff untuk membalas tanggapan serta merubah status tiket. Berikut adalah Gambar 20. Halaman Detail dan tindakan pengaduan.
+
+##### Tampilan Halaman Detail & Tindakan Pengaduan
+```
++-------------------------------------------------------------------+
+|  SIPENA | Detail Tiket: SPN-20260612-0001                         |
++-------------------------------------------------------------------+
+|  Data Pelanggan:                                                  |
+|  Nama: Budi Santoso | WA: 081234567890 | Status: Diproses         |
+|  Keterangan: Barang rusak saat dibeli                             |
+|  ---------------------------------------------------------------  |
+|  Form Tindakan Admin:                                             |
+|  Status Baru: [ Selesai / Ditolak / Diproses v ]                  |
+|  Catatan Status: [_____________________________________________]  |
+|                       [ UPDATE STATUS ]                           |
+|                                                                   |
+|  Tulis Tanggapan Balasan:                                         |
+|  Pesan: [______________________________________________________]  |
+|  Visibilitas: (x) Publik  ( ) Internal                            |
+|                       [ KIRIM TANGGAPAN ]                         |
+|                                                                   |
+|                       [ ESKALASI TIKET ]                          |
++-------------------------------------------------------------------+
+```
+*Gambar 20. Halaman Detail dan tindakan pengaduan.*
+
+##### Tabel 32. Halaman Detail & Tindakan Pengaduan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `UPDATE STATUS` | Memperbarui status keluhan pelanggan ke database. |
+| 2 | `KIRIM TANGGAPAN`| Mengirim balasan penjelasan kepada konsumen atau catatan rahasia staff. |
+| 3 | `ESKALASI TIKET` | Eskalasi penyelesaian ke Kepala Shift. |
+
+---
+
+### 8) Halaman Laporan & Rekapitulasi
+Halaman laporan dan rekapitulasi memfasilitasi rekapitulasi data keluhan serta pengunduhan berkas laporan. Berikut adalah Gambar 21. Halaman Laporan dan rekapitulasi.
+
+##### Tampilan Halaman Laporan & Rekapitulasi
+```
++-------------------------------------------------------------------+
+|  SIPENA | Dashboard  Pengaduan  Laporan  [Pengaturan]             |
++-------------------------------------------------------------------+
+|  Laporan Rekap Pengaduan                                          |
+|                                                                   |
+|  Bulan: [ Semua v ]  Tahun: [ 2026 ]  Status: [ Semua v ]         |
+|  [ FILTER ]                                                       |
+|                                                                   |
+|  [ DOWNLOAD EXCEL/CSV ]    [ DOWNLOAD WORD ]    [ CETAK PDF ]     |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | No | Tiket    | Pelanggan | Masalah | Status   | Tgl Selesai |  |
+|  |----|----------|-----------|---------|----------|-------------|  |
+|  | 1  | SPN-0001 | Budi      | Produk  | Selesai  | 12/06/2026  |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 21. Halaman Laporan dan rekapitulasi.*
+
+##### Tabel 33. Halaman Laporan & Rekapitulasi
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `FILTER` | Menyaring data pengaduan sesuai filter waktu. |
+| 2 | `DOWNLOAD EXCEL/CSV` | Memulai pengunduhan berkas ekspor format tabel CSV. |
+| 3 | `DOWNLOAD WORD` | Memulai pengunduhan berkas dokumen Word. |
+| 4 | `CETAK PDF` | Membuka jendela print browser. |
+
+---
+
+### 9) Halaman Kelola Karyawan khusus Super Admin
+Halaman kelola karyawan digunakan untuk manajemen pembuatan akun staff. Berikut adalah Gambar 22. Halaman Kelola karyawan.
+
+##### Tampilan Halaman Kelola Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Pengaturan User Akun Karyawan                                    |
+|                                                                   |
+|  [ + TAMBAH USER BARU ]                                           |
+|                                                                   |
+|  +-------------------------------------------------------------+  |
+|  | Nama       | Username  | Role        | Status   | Aksi      |  |
+|  |------------|-----------|-------------|----------|-----------|  |
+|  | Admin Andi | andi123   | Admin Staff | Aktif    | [Edit]    |  |
+|  +-------------------------------------------------------------+  |
++-------------------------------------------------------------------+
+```
+*Gambar 22. Halaman Kelola karyawan.*
+
+##### Tabel 34. Halaman Kelola Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `+ TAMBAH USER BARU` | Membuka form tambah data user staff. |
+| 2 | `Edit` | Mengubah detail data akun karyawan. |
+
+---
+
+### 10) Halaman Pengaturan Halaman Utama khusus Super Admin
+Halaman pengaturan halaman utama memfasilitasi pengubahan konten beranda dinamis. Berikut adalah Gambar 23. Halaman Pengaturan halaman utama.
+
+##### Tampilan Halaman Pengaturan Halaman Utama
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Pengaturan Tampilan Landing Page                                 |
+|                                                                   |
+|  Judul Hero     : [____________________________________________]  |
+|  Deskripsi Hero : [____________________________________________]  |
+|  Running Text   : [____________________________________________]  |
+|  URL YouTube    : [____________________________________________]  |
+|  Kontak/Layanan : [____________________________________________]  |
+|                                                                   |
+|                       [ SIMPAN CONFIG ]                           |
++-------------------------------------------------------------------+
+```
+*Gambar 23. Halaman Pengaturan halaman utama.*
+
+##### Tabel 35. Halaman Pengaturan Halaman Utama
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN CONFIG` | Menyimpan seluruh perubahan data konfigurasi beranda publik ke database. |
+
+---
+
+### 11) Halaman Tambah Karyawan khusus Super Admin
+Halaman tambah karyawan digunakan oleh Super Admin untuk mendaftarkan akun baru ke dalam sistem. Berikut adalah Gambar 24. Halaman Tambah karyawan.
+
+##### Tampilan Halaman Tambah Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Tambah User Akun Karyawan                                        |
+|                                                                   |
+|  Nama     : [__________________________________________________]  |
+|                                                                   |
+|  Username : [__________________________________________________]  |
+|                                                                   |
+|  Password : [__________________________________________________]  |
+|                                                                   |
+|  Role     : [ Admin / Karyawan | Super Admin / Kepala Shift  v ]  |
+|                                                                   |
+|  [x] Aktif                                                        |
+|                                                                   |
+|                     [ SIMPAN ]       [ BATAL ]                    |
++-------------------------------------------------------------------+
+```
+*Gambar 24. Halaman Tambah karyawan.*
+
+##### Tabel 36. Halaman Tambah Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN` | Menyimpan data pendaftaran user staff baru ke database. |
+| 2 | `BATAL` | Membatalkan pendaftaran dan kembali ke menu daftar user. |
+
+---
+
+### 12) Halaman Edit Karyawan khusus Super Admin
+Halaman edit karyawan digunakan oleh Super Admin untuk memperbarui data akun staff. Berikut adalah Gambar 25. Halaman Edit karyawan.
+
+##### Tampilan Halaman Edit Karyawan
+```
++-------------------------------------------------------------------+
+|  SIPENA | [User Karyawan]  [Settings Landing]           [Logout]  |
++-------------------------------------------------------------------+
+|  Ubah User Akun Karyawan                                          |
+|                                                                   |
+|  Nama     : [ Admin Andi ______________________________________]  |
+|                                                                   |
+|  Username : [ andi123 _________________________________________]  |
+|                                                                   |
+|  Password Baru : [_____________________________________________]  |
+|  * Kosongkan jika tidak ingin mengganti password                  |
+|                                                                   |
+|  Role     : [ Admin / Karyawan | Super Admin / Kepala Shift  v ]  |
+|                                                                   |
+|  [x] Aktif                                                        |
+|                                                                   |
+|                     [ SIMPAN ]       [ BATAL ]                    |
++-------------------------------------------------------------------+
+```
+*Gambar 25. Halaman Edit karyawan.*
+
+##### Tabel 37. Halaman Edit Karyawan
+| No | Tombol | Fungsi |
+| :--- | :--- | :--- |
+| 1 | `SIMPAN` | Menyimpan pembaruan profil akun user staff ke database. |
+| 2 | `BATAL` | Membatalkan pembaruan dan kembali ke menu daftar user. |
+
+---
