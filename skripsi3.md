@@ -1273,3 +1273,144 @@ Halaman edit karyawan digunakan oleh Super Admin untuk memperbarui data akun sta
 | 2 | `BATAL` | Membatalkan pembaruan dan kembali ke menu daftar user. |
 
 ---
+
+## 5. Testing
+Testing digunakan untuk melihat hasil dari sistem yang sudah dibangun. Penulis melakukan testing dengan cara menggunakan Black Box Testing.  
+Keterangan: 
+- **Berhasil**: Jika program yang diuji berjalan dan sesuai harapan.
+- **Error**: Jika program yang diuji tidak berjalan atau masih terdapat kesalahan.
+
+### a. Testing Form Login Admin
+Testing pertama dilakukan pada form login admin. Di bawah ini adalah Tabel 38. Testing form login.
+
+##### Tabel 38. Testing Form Login
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengosongkan username dan password lalu mengklik tombol MASUK. | Username = "", Password = "" | Sistem menampilkan pesan validasi bahwa field wajib diisi. | Sesuai harapan | Berhasil |
+| 2 | Mengisi kredensial yang salah lalu mengklik tombol MASUK. | Username = "salah", Password = "123" | Sistem menolak login dan menampilkan alert pesan error. | Sesuai harapan | Berhasil |
+| 3 | Mengisi username dan password yang benar lalu mengklik tombol MASUK. | Username = "admin", Password = "Admin@12345" | Sistem sukses melakukan autentikasi dan mengalihkan ke dashboard admin. | Sesuai harapan | Berhasil |
+
+---
+
+### b. Testing Form Pengaduan Publik
+Testing kedua dilakukan pada form pengaduan oleh pelanggan. Di bawah ini adalah Tabel 39. Testing form pengaduan.
+
+##### Tabel 39. Testing Form Pengaduan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengosongkan seluruh field wajib lalu mengklik tombol KIRIM ADUAN. | Nama = "", WhatsApp = "", Kategori = "" | Sistem menampilkan pesan validasi pengisian data wajib. | Sesuai harapan | Berhasil |
+| 2 | Memilih kategori "Return Produk" tanpa mengunggah file Struk Belanja. | Kategori = "Return Produk", Struk Belanja = "" | Sistem menampilkan pesan error bahwa berkas struk belanja wajib diunggah. | Sesuai harapan | Berhasil |
+| 3 | Mengisi data dengan lengkap dan valid lalu mengklik tombol KIRIM ADUAN. | Nama = "Budi", WhatsApp = "08123456789", Kategori = "Pelayanan" | Sistem memproses data, menyimpan ke database, dan mengalihkan ke halaman tiket sukses. | Sesuai harapan | Berhasil |
+
+---
+
+### c. Testing Halaman Tiket Sukses
+Testing ketiga dilakukan pada halaman tiket sukses pelanggan. Di bawah ini adalah Tabel 40. Testing halaman tiket sukses.
+
+##### Tabel 40. Testing Halaman Tiket Sukses
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengklik tombol CETAK TIKET setelah tiket berhasil digenerate. | Klik tombol CETAK TIKET | Sistem memicu fungsi print preview browser untuk mencetak/simpan tiket ke PDF. | Sesuai harapan | Berhasil |
+| 2 | Mengklik tombol LACAK ADUAN setelah pengaduan dikirim. | Klik tombol LACAK ADUAN | Sistem mengalihkan pelanggan ke halaman tracking status aduan. | Sesuai harapan | Berhasil |
+| 3 | Mengklik tombol KEMBALI pada halaman sukses. | Klik tombol KEMBALI | Sistem mengalihkan pelanggan kembali ke halaman landing page utama. | Sesuai harapan | Berhasil |
+
+---
+
+### d. Testing Halaman Lacak Status atau Tracking
+Testing keempat dilakukan pada halaman pelacakan status pengaduan. Di bawah ini adalah Tabel 41. Testing halaman lacak status.
+
+##### Tabel 41. Testing Halaman Lacak Status
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Memasukkan nomor tiket atau nomor WhatsApp yang salah/tidak terdaftar. | Tiket = "SPN-9999", WhatsApp = "0812" | Sistem menampilkan notifikasi bahwa data pengaduan tidak ditemukan. | Sesuai harapan | Berhasil |
+| 2 | Memasukkan nomor tiket dan WhatsApp yang valid dan terdaftar. | Tiket = "SPN-20260612-0001", WhatsApp = "081234567890" | Sistem menampilkan status keluhan beserta riwayat tanggapan publik secara rinci. | Sesuai harapan | Berhasil |
+
+---
+
+### e. Testing Halaman Dashboard Utama Admin
+Testing kelima dilakukan pada halaman dashboard utama administrator. Di bawah ini adalah Tabel 42. Testing halaman dashboard utama admin.
+
+##### Tabel 42. Testing Halaman Dashboard Utama Admin
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Membuka menu Dashboard setelah login sukses dilakukan. | Mengakses URL /admin/dashboard | Sistem menampilkan data statistik keluhan dan daftar keluhan terbaru secara dinamis. | Sesuai harapan | Berhasil |
+
+---
+
+### f. Testing Halaman Daftar Pengaduan
+Testing keenam dilakukan pada halaman daftar pengaduan admin. Di bawah ini adalah Tabel 43. Testing halaman daftar pengaduan.
+
+##### Tabel 43. Testing Halaman Daftar Pengaduan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Memilih status tertentu pada filter status lalu mengklik tombol FILTER. | Status = "Selesai", klik FILTER | Sistem hanya menampilkan data pengaduan yang berstatus selesai di dalam tabel. | Sesuai harapan | Berhasil |
+| 2 | Memasukkan nama pelanggan pada pencarian lalu mengklik tombol FILTER. | Cari = "Budi", klik FILTER | Sistem menyaring tabel dan hanya memunculkan pengaduan dari pelanggan bernama Budi. | Sesuai harapan | Berhasil |
+
+---
+
+### g. Testing Halaman Detail & Tindakan Pengaduan
+Testing ketujuh dilakukan pada halaman lembar kerja tindakan detail tiket. Di bawah ini adalah Tabel 44. Testing halaman detail dan tindakan pengaduan.
+
+##### Tabel 44. Testing Halaman Detail dan Tindakan Pengaduan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengubah status keluhan menjadi selesai dan mengklik UPDATE STATUS. | Status Baru = "Selesai", klik UPDATE STATUS | Status baru disimpan ke database complaints dan riwayat perubahan dicatat ke status_logs. | Sesuai harapan | Berhasil |
+| 2 | Menulis pesan tanggapan balasan publik lalu mengklik tombol KIRIM TANGGAPAN. | Visibility = "public", pesan = "Mohon maaf", klik kirim | Tanggapan publik tersimpan di database dan langsung tampil di tracking tiket pelanggan. | Sesuai harapan | Berhasil |
+| 3 | Menulis catatan eskalasi tiket lalu mengklik tombol Teruskan ke Kepala Shift. | Isi catatan eskalasi, klik Teruskan | Tiket berubah status menjadi Menunggu Keputusan dan dialihkan penanganannya ke Kepala Shift. | Sesuai harapan | Berhasil |
+
+---
+
+### h. Testing Halaman Laporan & Rekapitulasi
+Testing kedelapan dilakukan pada halaman filter rekapitulasi laporan. Di bawah ini adalah Tabel 45. Testing halaman laporan dan rekapitulasi.
+
+##### Tabel 45. Testing Halaman Laporan dan Rekapitulasi
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Memvisikan filter bulan dan tahun tertentu lalu mengklik tombol FILTER. | Bulan = "Juni", Tahun = "2026", klik FILTER | Sistem menyajikan tabel rekap data keluhan yang masuk pada periode bulan Juni 2026. | Sesuai harapan | Berhasil |
+| 2 | Mengklik tombol DOWNLOAD EXCEL/CSV untuk mendownload rekap. | Klik tombol DOWNLOAD EXCEL/CSV | Sistem menghasilkan dan memulai pengunduhan berkas rekap format CSV. | Sesuai harapan | Berhasil |
+| 3 | Mengklik tombol DOWNLOAD WORD untuk mendownload berkas. | Klik tombol DOWNLOAD WORD | Sistem menghasilkan berkas Microsoft Word (.doc) dan memulai pengunduhan otomatis. | Sesuai harapan | Berhasil |
+| 4 | Mengklik tombol CETAK PDF pada laporan. | Klik tombol CETAK PDF | Sistem membuka halaman cetak ramah browser (print layout). | Sesuai harapan | Berhasil |
+
+---
+
+### i. Testing Halaman Kelola Karyawan khusus Super Admin
+Testing kesembilan dilakukan pada menu manajemen data akun karyawan. Di bawah ini adalah Tabel 46. Testing halaman kelola karyawan.
+
+##### Tabel 46. Testing Halaman Kelola Karyawan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengklik tombol Nonaktifkan pada baris akun karyawan terpilih. | Klik Nonaktifkan, konfirmasi OK | Akun dinonaktifkan di database (is_active = 0) dan tidak dapat digunakan lagi untuk login. | Sesuai harapan | Berhasil |
+
+---
+
+### j. Testing Halaman Pengaturan Halaman Utama khusus Super Admin
+Testing kesepuluh dilakukan pada menu konfigurasi landing page dinamis. Di bawah ini adalah Tabel 47. Testing halaman pengaturan halaman utama.
+
+##### Tabel 47. Testing Halaman Pengaturan Halaman Utama
+| No | Tombol / Skenario | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengisi data landing settings baru lalu mengklik SIMPAN CONFIG. | Running Text = "Sipena Update", klik SIMPAN | Konfigurasi tersimpan ke database landing_settings dan langsung terupdate di landing page utama. | Sesuai harapan | Berhasil |
+
+---
+
+### k. Testing Halaman Tambah Karyawan khusus Super Admin
+Testing kesebelas dilakukan pada form pendaftaran karyawan baru. Di bawah ini adalah Tabel 48. Testing halaman tambah karyawan.
+
+##### Tabel 48. Testing Halaman Tambah Karyawan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Mengisi data pendaftaran dengan username yang sudah digunakan. | Username = "admin", Nama = "Staff Baru" | Sistem menolak pendaftaran dan memunculkan error "Username sudah terdaftar". | Sesuai harapan | Berhasil |
+| 2 | Mengisi seluruh data dengan lengkap dan valid lalu mengklik SIMPAN. | Username = "staffbaru", Nama = "Staff Baru", Role = "admin" | Sistem menyimpan akun baru ke database dan menampilkannya di daftar user aktif. | Sesuai harapan | Berhasil |
+
+---
+
+### l. Testing Halaman Edit Karyawan khusus Super Admin
+Testing kedua belas dilakukan pada form pengubahan data akun karyawan. Di bawah ini adalah Tabel 49. Testing halaman edit karyawan.
+
+##### Tabel 49. Testing Halaman Edit Karyawan
+| No | Skenario Pengujian | Test Case | Hasil yang Diharapkan | Hasil Pengujian | Kesimpulan |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Memperbarui nama karyawan dan mengubah status keaktifan menjadi nonaktif. | Nama = "Andi Update", is_active = 0, klik SIMPAN | Sistem sukses memperbarui database users dan menonaktifkan akun karyawan tersebut. | Sesuai harapan | Berhasil |
+
+---
+
