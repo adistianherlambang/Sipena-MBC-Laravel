@@ -1280,6 +1280,46 @@ Keterangan:
 - **Berhasil**: Jika program yang diuji berjalan dan sesuai harapan.
 - **Error**: Jika program yang diuji tidak berjalan atau masih terdapat kesalahan.
 
+Berikut adalah flowchart alur pengujian sistem menggunakan metode Black Box Testing:
+
+```mermaid
+%%{init: {"flowchart": {"curve": "linear"}}}%%
+flowchart TD
+    Start([Mulai]) --> Prep[Identifikasi Fitur & Skenario Pengujian]
+    Prep --> InputData[/Tentukan Data Uji & Test Case/]
+    InputData --> RunTest[Jalankan Pengujian pada Antarmuka Sistem]
+    RunTest --> Decision{Hasil Sesuai Harapan?}
+    
+    Decision -->|Tidak| ErrLog[Catat sebagai Status Error]
+    ErrLog --> FixCode[Perbaikan Kode Program]
+    FixCode --> RunTest
+    
+    Decision -->|Ya| SuccessLog[Catat sebagai Status Berhasil]
+    SuccessLog --> CheckAll{Semua Test Case Selesai?}
+    
+    CheckAll -->|Tidak| NextCase[Ambil Test Case Selanjutnya]
+    NextCase --> RunTest
+    
+    CheckAll -->|Ya| Summary[Buat Rekapitulasi & Laporan Hasil Testing]
+    Summary --> End([Selesai])
+
+    %% Styles (Monochrome / B&W for academic paper)
+    classDef default fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
+    classDef terminal fill:#fff,stroke:#000,stroke-width:2px,color:#000;
+    classDef decision fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
+    classDef process fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
+    classDef data fill:#fff,stroke:#000,stroke-width:1.5px,color:#000;
+
+    class Start,End terminal;
+    class Decision,CheckAll decision;
+    class Prep,RunTest,ErrLog,FixCode,SuccessLog,NextCase,Summary process;
+    class InputData data;
+    linkStyle default stroke:#000,stroke-width:1.5px;
+```
+*Gambar 5.1. Flowchart Alur Pengujian Black Box.*
+
+
+
 ### a. Testing Form Login Admin
 Testing pertama dilakukan pada form login admin. Di bawah ini adalah Tabel 38. Testing form login.
 
